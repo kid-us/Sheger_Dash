@@ -1,5 +1,3 @@
-import icon from "@/assets";
-import useAuth from "@/store/useAuth";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -20,10 +18,7 @@ export const tabs = [
 ];
 
 const Sidebar = ({ active }: Props) => {
-  const { logout } = useAuth();
-
   const handleLogout = () => {
-    logout();
     localStorage.clear();
     window.location.href = "/login";
   };
@@ -35,7 +30,7 @@ const Sidebar = ({ active }: Props) => {
             <span className="lg:block md:hidden block font-poppins text-white">
               Zusebingo
             </span>
-            <img src={icon} alt="logo" className="w-20 lg:hidden" />
+            {/* <img src={icon} alt="logo" className="w-20 lg:hidden" /> */}
           </h1>
         </Link>
         <div className="mt-10 md:text-center lg:text-start lg:ms-3">
