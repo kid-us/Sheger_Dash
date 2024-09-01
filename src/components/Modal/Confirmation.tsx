@@ -1,51 +1,15 @@
-import socket from "@/socket";
 import { useState } from "react";
 
 interface Props {
   onDelete: (value: boolean) => void;
   name: string;
-  bonus?: string;
-  minute?: string;
 }
 
-const Confirmation = ({ onDelete, name, bonus, minute }: Props) => {
+const Confirmation = ({ onDelete, name }: Props) => {
   const [confirmed, setConfirmed] = useState(false);
 
   const handleConfirm = () => {
-    // Terminate Name
-    if (name === "Terminate") {
-      socket.emit("terminate_jkt", (response: boolean) => {
-        if (response) {
-          setConfirmed(true);
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        }
-      });
-    }
-
-    // Happy Hour
-    if (name === "Happy") {
-      const happy = {
-        bonus: bonus,
-        duration: minute,
-      };
-      socket.emit("set_bonus", happy, () => {
-        setConfirmed(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      });
-    }
-
-    // Jackpot Start
-    if (name === "Start") {
-      setConfirmed(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-      socket.emit("start_jackpot_game", () => {});
-    }
+    setConfirmed(true);
   };
 
   return (
