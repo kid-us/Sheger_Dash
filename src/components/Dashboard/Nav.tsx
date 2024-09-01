@@ -1,7 +1,5 @@
-import useAuth from "@/store/useAuth";
-
 const Nav = () => {
-  const { username } = useAuth();
+  // const { username } = useAuth();
 
   return (
     <>
@@ -11,7 +9,7 @@ const Nav = () => {
             <p className="font-poppins text-xl">
               Welcome back
               <span className="text-teal-400 font-poppins mx-2 font-bold uppercase">
-                {username}
+                {"username"}
               </span>
             </p>
           </div>
