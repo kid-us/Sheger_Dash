@@ -21,7 +21,7 @@ const Sidebar = ({ active }: Props) => {
         <Link to="/">
           <h1 className="lg:text-2xl text-2xl md:text-center lg:text-start lg:ms-3">
             <span className="lg:block md:hidden block font-poppins text-white">
-              Zusebingo
+              Shegerlace
             </span>
             {/* <img src={icon} alt="logo" className="w-20 lg:hidden" /> */}
           </h1>

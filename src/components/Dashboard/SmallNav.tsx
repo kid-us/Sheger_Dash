@@ -11,9 +11,9 @@ const SmallNavbar = ({ active }: Props) => {
 
   return (
     <>
-      <div className="lg:hidden md:hidden hero-bg z-10 flex justify-between sticky top-0 shadow shadow-gray-700 p-4 bg">
+      <div className="lg:hidden md:hidden hero-bg z-10 flex justify-between sticky top-0 shadow p-4 bg">
         <Link to="/">
-          <p className="text-black text-xl font-poppins">Zusebingo</p>
+          <p className="text-black text-xl font-poppins">Shegerlace</p>
         </Link>
         <p
           onClick={() => setMenu(!menu)}
@@ -22,7 +22,7 @@ const SmallNavbar = ({ active }: Props) => {
       </div>
 
       {menu && (
-        <div className="fixed bg-main w-full z-50 h-[100dvh] bg2">
+        <div className="fixed bg-main w-full z-50 h-[100dvh] bg">
           <div className="mt-10 md:text-center lg:text-start lg:ms-3 text-black px-5">
             {tabs.map((tab) => (
               <Link
