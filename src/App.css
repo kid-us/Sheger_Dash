@@ -1,0 +1,113 @@
+/* Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+/* Nanum */
+/* @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700");
+
+body {
+  background-color: #f2ecdc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif;
+}
+
+p,
+label,
+button,
+input {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif !important;
+}
+
+a {
+  font-family: "Cousine", monospace;
+}
+
+a:hover {
+  font-family: "Cousine", monospace;
+}
+
+.bg {
+  background-color: #f2ecdc;
+}
+
+.font-cousine {
+  font-family: "Cousine", monospace !important;
+}
+
+.btn-bg {
+  background-color: #92c6d9;
+}
+
+.text-color {
+  color: #50bae0;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #293132;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.154);
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+.animation-swing {
+  animation: sway 2.4s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
