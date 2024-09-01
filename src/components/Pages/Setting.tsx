@@ -8,6 +8,8 @@ import { useState } from "react";
 import axios from "axios";
 import baseUrl from "../../services/request";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import Loader from "../Button/Loader";
+import Button from "../Button/Button";
 
 const schema = z.object({
   password: z.string().min(4, {
@@ -77,7 +79,7 @@ const Setting = () => {
           <Nav />
           <div className="lg:grid grid-cols-2 bg2 rounded lg:p-8 lg:mx-0 mx-1 p-5 mt-10">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <p className="font-poppins text-white mb-5 text-xl">
+              <p className="font-poppins mb-5 text-xl">
                 Update your credentials
               </p>
               {/* Update error */}
@@ -92,7 +94,7 @@ const Setting = () => {
               {/* Email */}
               <div className="mb-5">
                 <label
-                  className="text-sm text-gray-500 block font-poppins"
+                  className="text-sm text-gray-700 block font-poppins"
                   htmlFor="username"
                 >
                   Username
@@ -101,10 +103,10 @@ const Setting = () => {
                   {...register("username")}
                   type="text"
                   name="username"
-                  className="text-black font-poppins font-bold w-full py-4 mt-2 rounded focus:outline-none px-5 shadow shadow-gray-300"
+                  className="text-black font-poppins w-full py-4 mt-2 rounded focus:outline-none ps-3 shadow shadow-zinc-900 bg-white"
                 />
                 {errors.username && (
-                  <p className="font-poppins bg-red-600 text-xs mt-2 rounded ps-2 py-[2px] text-white">
+                  <p className="font-poppins text-red-600 text-xs mt-2 rounded py-[2px]">
                     {errors.username.message}
                   </p>
                 )}
@@ -113,44 +115,39 @@ const Setting = () => {
               {/* Password */}
               <div className="mb-10 relative">
                 <label
-                  className="text-sm text-gray-500 block font-poppins"
+                  className="text-sm text-gray-700 block font-poppins"
                   htmlFor="password"
                 >
                   Password
                 </label>
-
-                <input
-                  {...register("password")}
-                  type={passwordType ? "password" : "text"}
-                  name="password"
-                  className="text-black font-poppins font-bold w-full py-4 mt-2 rounded focus:outline-none px-5 shadow shadow-gray-300"
-                />
-                <span
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                    setPasswordType(!passwordType);
-                  }}
-                  className={`absolute ${
-                    showPassword ? "bi-eye" : "bi-eye-slash"
-                  } right-2 top-9 cursor-pointer text-black px-2 text-lg border-l border-gray-500`}
-                ></span>
+                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow shadow-zinc-900 overflow-hidden">
+                  <div className="col-span-11">
+                    <input
+                      {...register("password")}
+                      type={passwordType ? "password" : "text"}
+                      name="password"
+                      className="text-black font-poppins w-full py-4 focus:outline-none ps-3"
+                    />
+                  </div>
+                  <p
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                      setPasswordType(!passwordType);
+                    }}
+                    className={`${
+                      showPassword ? "bi-eye" : "bi-eye-slash"
+                    } cursor-pointer text-black text-center text-lg pt-4 border-l border-gray-300`}
+                  ></p>
+                </div>
                 {errors.password && (
-                  <p className="font-poppins bg-red-600 text-xs mt-2 rounded ps-2 py-[2px] text-white">
+                  <p className="font-poppins text-red-600 text-xs mt-2 rounded py-[2px]">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
               {/* Button */}
-              {loader ? (
-                <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins shadow shadow-zinc-950 chakra h-12 text-sm">
-                  <span className="loader rounded"></span>
-                </p>
-              ) : (
-                <button className="py-3 text-black btn-bg w-full rounded font-poppins shadow shadow-zinc-950 chakra h-12 text-sm">
-                  Update
-                </button>
-              )}
+              {loader ? <Loader /> : <Button label="Update" />}
             </form>
           </div>
         </div>
