@@ -137,9 +137,9 @@ const Edit = ({ id, onClose }: Props) => {
   return (
     <>
       <div className="overlay w-full z-50"></div>
-      <div className="fixed lg:my-0 my-10 lg:top-0 left-0 w-full z-50">
-        <div className="flex justify-center items-center h-[100vh] overflow-scroll">
-          <div className="lg:pt-6 pt-20 px-8 bg rounded overflow-hidden lg:w-[60%] lg:mx-0 mx-3 pb-10">
+      <div className="fixed top-5 left-0 w-full z-50">
+        <div className="flex justify-center items-center lg:h-[100vh]">
+          <div className="lg:pt-6 pt-5 px-8 bg rounded overflow-y-scroll h-[95vh] lg:w-[60%] lg:mx-0 mx-3 pb-10">
             {success ? (
               <div className="flex justify-center items-center h-full">
                 <p className="bi-check-circle-fill text-6xl text-green-600"></p>
