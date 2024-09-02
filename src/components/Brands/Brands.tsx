@@ -1,9 +1,39 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import baseUrl from "../../services/request";
+
+interface BrandItem {
+  id: number;
+  brand_names: string;
+}
+
+interface Brand {
+  brands: BrandItem[];
+}
 
 const Brands = () => {
   const [brands, setBrands] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const [brand, setBrand] = useState<BrandItem[]>([]);
 
+  // Get Brand
+  useEffect(() => {
+    axios
+      .get<Brand>(`${baseUrl}store/get-brands`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((response) => {
+        setBrand(response.data.brands);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // Create Brand
   const handleSubmit = () => {
     if (brands.length < 3) {
       setError(true);
@@ -11,6 +41,35 @@ const Brands = () => {
     }
 
     setError(false);
+
+    axios
+      .post(`${baseUrl}store/create-brand?brand=${brands}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Delete Brand
+  const handleDelete = (id: number) => {
+    axios
+      .delete(`${baseUrl}store/delete-brand?brand_id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -39,20 +98,28 @@ const Brands = () => {
 
         {/* List of Categories */}
         <p className="mt-7">List of active Brands</p>
-        <div className="grid grid-cols-12 bg-white rounded shadow shadow-zinc-900 p-4 w-80 mt-3">
-          <div className="mb-3 col-span-10">
-            <p>Nike</p>
-          </div>
-          <div className="mb-3 col-span-2">
-            <button className="bi-trash-fill text-red-600"></button>
-          </div>
+        <div className="bg-white  rounded shadow shadow-zinc-900 px-4 pt-3 w-80 mt-3">
+          {brand.length > 0 ? (
+            brand.map((b) => (
+              <div
+                key={b.id}
+                className="grid grid-cols-12 hover:text-gray-400 mb-2"
+              >
+                <div className="mb-3 col-span-10">
+                  <p>{b.brand_names}</p>
+                </div>
 
-          <div className="col-span-10">
-            <p>Adidas</p>
-          </div>
-          <div className="col-span-2">
-            <button className="bi-trash-fill text-red-600"></button>
-          </div>
+                <div className="col-span-2">
+                  <button
+                    onClick={() => handleDelete(b.id)}
+                    className="bi-trash-fill text-red-600"
+                  ></button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center pb-3">You haven't crate any Brands yet</p>
+          )}
         </div>
       </div>
     </>

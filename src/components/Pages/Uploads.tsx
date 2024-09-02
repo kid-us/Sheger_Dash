@@ -181,12 +181,6 @@ const Uploads = () => {
           </div>
           <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="lg:grid grid-cols-2 gap-x-10">
-              {/* {loginError && (
-                <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
-                  &nbsp; Invalid username and Password.
-                </p>
-              )} */}
-
               {/* Image */}
               <div>
                 {/* Main Picture */}

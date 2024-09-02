@@ -1,8 +1,26 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import baseUrl from "../../services/request";
 
 const Category = () => {
   const [category, setCategory] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    axios
+      .get(`${baseUrl}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleSubmit = () => {
     if (category.length < 3) {

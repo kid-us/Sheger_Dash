@@ -9,10 +9,10 @@ import Brands from "../Brands/Brands";
 const Home = () => {
   const [title] = useState<string>("Zusebingo | Dashboard");
   useDocumentTitle(title);
+  // const [loader, setLoader] = useState<boolean>(false);
 
   // const access_token = localStorage.getItem("token");
 
-  // const [loader, setLoader] = useState<boolean>(false);
 
   return (
     <>
