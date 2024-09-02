@@ -3,11 +3,14 @@ import Nav from "../Dashboard/Nav";
 import Sidebar from "../Dashboard/Sidebar";
 import SmallNavbar from "../Dashboard/SmallNav";
 import { img } from "../../assets";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Orders = () => {
+  const [title] = useState("Orders");
+  useDocumentTitle(title);
+
   const [active, setActive] = useState<string>("all");
   const [option, setOption] = useState<boolean>(false);
-  // const [selectedId, setSelectedId] = useState<string>("");
 
   return (
     <>

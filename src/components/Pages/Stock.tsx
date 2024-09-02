@@ -1,13 +1,16 @@
 import SmallNavbar from "../Dashboard/SmallNav";
 import Sidebar from "../Dashboard/Sidebar";
 import Nav from "../Dashboard/Nav";
-
 import useStock from "../../hooks/useStock";
 import { useState } from "react";
 import Edit from "../Modal/Edit";
 import Confirmation from "../Modal/Confirmation";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Stock = () => {
+  const [title] = useState("Stock");
+  useDocumentTitle(title);
+
   const { stock } = useStock();
 
   const [edit, setEdit] = useState<boolean>(false);

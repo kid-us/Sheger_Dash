@@ -7,10 +7,8 @@ import Category from "../Categories/Category";
 import Brands from "../Brands/Brands";
 
 const Home = () => {
-  const [title] = useState<string>("Zusebingo | Dashboard");
+  const [title] = useState<string>("Shegerlace | Dashboard");
   useDocumentTitle(title);
-  // const [loader, setLoader] = useState<boolean>(false);
-
   // const access_token = localStorage.getItem("token");
 
   return (
