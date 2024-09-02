@@ -5,6 +5,7 @@ import Login from "./components/Pages/Login";
 import Setting from "./components/Pages/Setting";
 import Uploads from "./components/Pages/Uploads";
 import Orders from "./components/Pages/Orders";
+import Stock from "./components/Pages/Stock";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/setting" element={<Setting />} />
         <Route path="/upload" element={<Uploads />} />
+        <Route path="/stock" element={<Stock />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </>
