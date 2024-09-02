@@ -9,11 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../Button/Loader";
 import Button from "../Button/Button";
 // import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import baseUrl from "../../services/request";
-// import useDocumentTitle from "../../hooks/useDocumentTitle";
-// import Button from "../Button/Button";
-// import Loader from "../Button/Loader";
+import axios from "axios";
+import baseUrl from "../../services/request";
 
 const schema = z.object({
   description: z.string().min(10, {
@@ -45,7 +42,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Uploads = () => {
-  const [title] = useState<string>("Zusebingo | Dashboard");
+  // const access_token = localStorage.getItem("token");
+
+  const [title] = useState<string>("Upload");
   useDocumentTitle(title);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,8 +52,14 @@ const Uploads = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const [preview, setPreview] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  // Cover Picture
-  const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+  // Shoes Picture
+  const [shoesImage, setShoesImage] = useState<File | null>(null);
+  const [optionalImg1, setOptionalImg1] = useState<File | null>(null);
+  const [optionalImg2, setOptionalImg2] = useState<File | null>(null);
+  const [optionalImg3, setOptionalImg3] = useState<File | null>(null);
+  const [optionalImg4, setOptionalImg4] = useState<File | null>(null);
+  const [optionalImg5, setOptionalImg5] = useState<File | null>(null);
 
   const {
     register,
@@ -62,38 +67,92 @@ const Uploads = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  //  Handle Course  Cover file Change
+  //  Handle Shoes file Change
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const cover = e.target.files[0];
       const previewURL = URL.createObjectURL(cover);
-      setCoverFile(cover);
+      setShoesImage(cover);
       setPreview(previewURL);
     }
   };
 
-  // Handle Course  Cover file Removed
+  // Handle shoes file Removed
   const handleFileRemoved = () => {
     setPreview("");
     setPreview("");
-    setCoverFile(null);
+    setShoesImage(null);
     if (inputRef.current) {
       inputRef.current.value = "";
     }
   };
 
+  // Optional Image
+  const handleOptionalFileChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    fileNumber: number
+  ) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const img = e.target.files[0];
+      if (fileNumber === 1) {
+        setOptionalImg1(img);
+      } else if (fileNumber === 2) {
+        setOptionalImg2(img);
+      } else if (fileNumber === 3) {
+        setOptionalImg3(img);
+      } else if (fileNumber === 4) {
+        setOptionalImg4(img);
+      } else if (fileNumber === 5) {
+        setOptionalImg5(img);
+      }
+    }
+  };
+
+  // Submit Form
   const onSubmit = (data: FieldValues) => {
     // Cover page Vaidation
-    if (coverFile === null) {
+    if (shoesImage === null) {
       setError(true);
       return;
     }
 
     setError(false);
     setLoader(true);
-    console.log(data);
+
+    const formData = new FormData();
+
+    formData.append("name", data.name);
+    formData.append("stock", data.quantity);
+    formData.append("price", data.price);
+    formData.append("category", data.category);
+    formData.append("brand", data.brand);
+    formData.append("size_range", data.sizeStart + "-" + data.sizeEnd);
+    formData.append("description", data.description);
+    // Images
+    formData.append("main_img", shoesImage);
+    if (optionalImg1) formData.append("optional_img1", optionalImg1);
+    if (optionalImg2) formData.append("optional_img2", optionalImg2);
+    if (optionalImg3) formData.append("optional_img3", optionalImg3);
+    if (optionalImg4) formData.append("optional_img4", optionalImg4);
+    if (optionalImg5) formData.append("optional_img5", optionalImg5);
+
+    axios
+      .post(`${baseUrl}/course/courses`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        setLoader(false);
+        console.error(error);
+      });
   };
-  // const access_token = localStorage.getItem("token");
 
   return (
     <>
@@ -111,7 +170,15 @@ const Uploads = () => {
           <Nav />
 
           {/* Upload */}
-          <p className="text-black font-poppins my-8 text-xl">Upload Shoes</p>
+          <div className="flex my-8 justify-between">
+            <p className="text-black font-poppins text-xl">Upload Shoes</p>
+
+            {success && (
+              <p className="rounded bg-green-500 text-white shadow w-96 text-center p-1">
+                Shoes product uploaded successfully!
+              </p>
+            )}
+          </div>
           <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="lg:grid grid-cols-2 gap-x-10">
               {/* {loginError && (
@@ -120,6 +187,7 @@ const Uploads = () => {
                 </p>
               )} */}
 
+              {/* Image */}
               <div>
                 {/* Main Picture */}
                 <div className={``}>
@@ -134,7 +202,6 @@ const Uploads = () => {
                         className="hidden"
                         accept="image/*"
                         name="upload-file"
-                        id="upload-file"
                         onChange={handleFileChange}
                       />
                       {!preview && (
@@ -160,7 +227,7 @@ const Uploads = () => {
 
                         <div
                           onClick={() => handleFileRemoved()}
-                          className="absolute -top-2 -left-3 z-10"
+                          className="absolute -top-2 right-3 z-10"
                         >
                           <p className="bi-x bg-red-700 shadow shadow-zinc-900 h-6 w-6 pt-1 rounded-full text-center cursor-pointer text-white text-sm"></p>
                         </div>
@@ -168,13 +235,78 @@ const Uploads = () => {
                     )}
                   </div>
                 </div>
-
                 {error && (
                   <p className="text-red-500 text-sm mt-3">
                     Please upload main shoes image.
                   </p>
                 )}
 
+                {/* Optional Images */}
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="text-gray-500 text-sm block mb-3"
+                  >
+                    Optional Images choose 5 optional images
+                  </label>
+                  {/* 1 */}
+                  <input
+                    type="file"
+                    className={`pt-2 ps-2 w-full ${
+                      optionalImg1 !== null ? "bg-green-500" : "bg-white"
+                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    accept="image/*"
+                    name="upload-file"
+                    onChange={(e) => handleOptionalFileChange(e, 1)}
+                  />
+                  {/* 2 */}
+                  <input
+                    type="file"
+                    className={`pt-2 ps-2 w-full ${
+                      optionalImg2 !== null ? "bg-green-500" : "bg-white"
+                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    accept="image/*"
+                    name="upload-file"
+                    onChange={(e) => handleOptionalFileChange(e, 2)}
+                  />
+                  {/* 3 */}
+                  <input
+                    type="file"
+                    className={`pt-2 ps-2 w-full ${
+                      optionalImg3 !== null ? "bg-green-500" : "bg-white"
+                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    accept="image/*"
+                    name="upload-file"
+                    onChange={(e) => handleOptionalFileChange(e, 3)}
+                  />
+                  {/* 4 */}
+                  <input
+                    type="file"
+                    className={`pt-2 ps-2 w-full ${
+                      optionalImg4 !== null ? "bg-green-500" : "bg-white"
+                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    accept="image/*"
+                    name="upload-file"
+                    onChange={(e) => handleOptionalFileChange(e, 4)}
+                  />
+                  {/* 5 */}
+                  <input
+                    type="file"
+                    className={`pt-2 ps-2 w-full ${
+                      optionalImg5 !== null ? "bg-green-500" : "bg-white"
+                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    accept="image/*"
+                    name="upload-file"
+                    onChange={(e) => handleOptionalFileChange(e, 5)}
+                  />
+                </div>
+
+                <div className="mt-4 text-center">
+                  {loader ? <Loader /> : <Button label="Upload" />}
+                </div>
+              </div>
+              {/* Forms */}
+              <div>
                 {/* Name */}
                 <div className="">
                   <label htmlFor="name" className="text-gray-500 text-sm">
@@ -212,9 +344,6 @@ const Uploads = () => {
                     </p>
                   )}
                 </div>
-              </div>
-
-              <div>
                 {/* Price */}
                 <div className="">
                   <label htmlFor="price" className="text-gray-500 text-sm">
@@ -345,10 +474,6 @@ const Uploads = () => {
                     </p>
                   )}
                 </div>
-              </div>
-
-              <div className="mt-4 text-center">
-                {loader ? <Loader /> : <Button label="Upload" />}
               </div>
             </div>
           </form>
