@@ -8,7 +8,6 @@ import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../Button/Loader";
 import Button from "../Button/Button";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../../services/request";
 import useBrands from "../../hooks/useBrands";
