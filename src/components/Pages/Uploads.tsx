@@ -300,7 +300,8 @@ const Uploads = () => {
                   />
                 </div>
 
-                <div className="mt-4 text-center">
+                {/* Button */}
+                <div className="lg:block hidden mt-4 text-center">
                   {loader ? <Loader /> : <Button label="Upload" />}
                 </div>
               </div>
@@ -480,6 +481,11 @@ const Uploads = () => {
                       {errors.description.message}
                     </p>
                   )}
+                </div>
+
+                {/* Button */}
+                <div className="lg:hidden block mt-4 text-center">
+                  {loader ? <Loader /> : <Button label="Upload" />}
                 </div>
               </div>
             </div>
