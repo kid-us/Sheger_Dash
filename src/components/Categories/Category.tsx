@@ -32,7 +32,7 @@ const Category = () => {
         )}
         <button
           onClick={handleSubmit}
-          className="btn-bg w-80 mt-3 rounded h-9 shadow shadow-zinc-900"
+          className="btn-bg w-80 mt-3 rounded h-10 shadow shadow-zinc-900"
         >
           Create
         </button>
