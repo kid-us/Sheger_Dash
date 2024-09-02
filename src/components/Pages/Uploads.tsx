@@ -115,7 +115,7 @@ const Uploads = () => {
 
   // Submit Form
   const onSubmit = (data: FieldValues) => {
-    // Cover page Vaidation
+    // Shoes Validation
     if (shoesImage === null) {
       setError(true);
       return;
