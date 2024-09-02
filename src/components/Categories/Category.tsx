@@ -2,26 +2,38 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import baseUrl from "../../services/request";
 
+interface CategoryItem {
+  id: number;
+  category_names: string;
+}
+
+interface Category {
+  categories: CategoryItem[];
+}
+
 const Category = () => {
   const [category, setCategory] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
 
+  // Get Categories
   useEffect(() => {
     axios
-      .get(`${baseUrl}`, {
+      .get<Category>(`${baseUrl}store/get-categories`, {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((response) => {
-        console.log(response);
+        setCategories(response.data.categories);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  // Create Category
   const handleSubmit = () => {
     if (category.length < 3) {
       setError(true);
@@ -29,6 +41,35 @@ const Category = () => {
     }
 
     setError(false);
+
+    axios
+      .post(`${baseUrl}store/create-category?category=${category}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Delete Category
+  const handleDelete = (id: number) => {
+    axios
+      .delete(`${baseUrl}store/delete-category?category_id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -57,20 +98,30 @@ const Category = () => {
 
         {/* List of Categories */}
         <p className="mt-7">List of active Categories</p>
-        <div className="grid grid-cols-12 bg-white rounded shadow shadow-zinc-900 p-4 w-80 mt-3">
-          <div className="mb-3 col-span-10">
-            <p>Kids</p>
-          </div>
-          <div className="mb-3 col-span-2">
-            <button className="bi-trash-fill text-red-600"></button>
-          </div>
+        <div className="bg-white  rounded shadow shadow-zinc-900 px-4 pt-3 w-80 mt-3">
+          {categories.length > 0 ? (
+            categories.map((c) => (
+              <div
+                key={c.id}
+                className="grid grid-cols-12 hover:text-gray-400 mb-2"
+              >
+                <div className="mb-3 col-span-10">
+                  <p>{c.category_names}</p>
+                </div>
 
-          <div className="col-span-10">
-            <p>Kids</p>
-          </div>
-          <div className="col-span-2">
-            <button className="bi-trash-fill text-red-600"></button>
-          </div>
+                <div className="col-span-2">
+                  <button
+                    onClick={() => handleDelete(c.id)}
+                    className="bi-trash-fill text-red-600"
+                  ></button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center pb-3">
+              You haven't crate any categories yet
+            </p>
+          )}
         </div>
       </div>
     </>
