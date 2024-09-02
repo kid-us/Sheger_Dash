@@ -12,6 +12,7 @@ export interface Shoes {
   size_range: string;
   stock: string;
   uid: string;
+  description: string;
 }
 
 export interface AllShoes {

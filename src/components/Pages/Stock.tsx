@@ -3,12 +3,26 @@ import Sidebar from "../Dashboard/Sidebar";
 import Nav from "../Dashboard/Nav";
 
 import useStock from "../../hooks/useStock";
+import { useState } from "react";
+import Edit from "../Modal/Edit";
 
 const Stock = () => {
   const { stock } = useStock();
 
+  const [edit, setEdit] = useState<boolean>(false);
+  const [editId, setEditId] = useState<string>("");
+
   return (
     <>
+      {edit && (
+        <Edit
+          id={editId}
+          onClose={() => {
+            setEdit(false);
+            setEditId("");
+          }}
+        />
+      )}
       <div className="relative lg:grid md:grid grid-cols-11">
         {/* Small device Navbar */}
         <SmallNavbar active="Stock" />
@@ -29,15 +43,24 @@ const Stock = () => {
 
           <div className="grid grid-cols-4 gap-x-6">
             {stock.map((s) => (
-              <div className="bg-white rounded shadow shadow-zinc-900">
+              <div
+                key={s.id}
+                className="bg-white rounded shadow shadow-zinc-900"
+              >
                 <img
                   src={s.main_picture}
                   alt="Shoes"
                   className="h-60 w-full object-contain"
                 />
                 <div className="flex justify-between px-3 py-2">
+                  <button
+                    onClick={() => {
+                      setEdit(true);
+                      setEditId(s.uid);
+                    }}
+                    className="text-xl bi-pen-fill text-green-500"
+                  ></button>
                   <button className="text-xl bi-trash-fill text-red-500"></button>
-                  <button className="text-xl bi-pen-fill text-green-500"></button>
                 </div>
               </div>
             ))}

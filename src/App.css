@@ -81,7 +81,7 @@ input[type="number"] {
   right: 0;
   bottom: 0;
   z-index: 0;
-  background-color: rgba(0, 0, 0, 0.154);
+  background-color: rgba(0, 0, 0, 0.468);
 }
 
 @keyframes sway {
