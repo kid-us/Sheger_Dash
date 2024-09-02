@@ -1,15 +1,32 @@
+import axios from "axios";
 import { useState } from "react";
+import baseUrl from "../../services/request";
 
 interface Props {
   onDelete: (value: boolean) => void;
+  id: string;
   name: string;
 }
 
-const Confirmation = ({ onDelete, name }: Props) => {
+const Confirmation = ({ onDelete, name, id }: Props) => {
   const [confirmed, setConfirmed] = useState(false);
 
   const handleConfirm = () => {
-    setConfirmed(true);
+    axios
+      .delete(`${baseUrl}store/delete-shoe?shoe_id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        setConfirmed(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -20,26 +37,21 @@ const Confirmation = ({ onDelete, name }: Props) => {
           <div className="py-6 px-8 bg rounded lg:w-[30%] lg:mx-0 mx-3">
             {!confirmed ? (
               <>
-                <h1 className="text-white text-xl ">{name}</h1>
-                <p className="text-sm  text-gray-300 my-5 font-poppins">
-                  {name === "Terminate"
-                    ? "Are you sure you want to terminate jackpot? This action cannot be undone. Do you want to proceed?"
-                    : name === "Start"
-                    ? "Are you sure you want to start the jackpot? Do you want to proceed?"
-                    : "Are you sure you want to create a happy hour? Do you want to proceed?"}
+                <h1 className="text-xl ">{name}</h1>
+                <p className="text-sm my-5 font-poppins">
+                  Are you sure you want to delete the product? This action
+                  cannot be undone. Do you want to proceed
                 </p>
                 <div className="flex justify-between gap-x-10">
                   <button
                     onClick={() => onDelete(false)}
-                    className="w-full bg-sky-600 rounded text-white shadow-none h-12 font-poppins"
+                    className="w-full bg-sky-600 rounded text-white h-12 font-poppins shadow shadow-zinc-900"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleConfirm()}
-                    className={`w-full ${
-                      name === "Terminate" ? "bg-red-500" : "bg-green-600"
-                    } rounded text-white shadow-none h-12 font-poppins`}
+                    className={`w-full bg-red-500 shadow shadow-zinc-900 rounded text-white h-12 font-poppins`}
                   >
                     {name === "Happy" ? "Create" : name}
                   </button>
@@ -48,10 +60,8 @@ const Confirmation = ({ onDelete, name }: Props) => {
             ) : (
               <div className="text-center mt-4">
                 <p className="bi-check-circle-fill text-green-500 text-4xl"></p>
-                <p className="text-white mt-5 text-xl font-poppins first-letter:uppercase">
-                  {name === "Terminate" && "Jackpot terminated successfully!"}
-                  {name === "Happy" && "Happy hour created successfully!"}
-                  {name === "Start" && "Jackpot started successfully!"}
+                <p className="text-black mt-5 text-xl font-poppins first-letter:uppercase">
+                  Product deleted successfully!
                 </p>
               </div>
             )}

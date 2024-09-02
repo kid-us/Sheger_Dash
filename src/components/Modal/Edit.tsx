@@ -137,9 +137,9 @@ const Edit = ({ id, onClose }: Props) => {
   return (
     <>
       <div className="overlay w-full z-50"></div>
-      <div className="fixed top-0 left-0 w-full z-50">
-        <div className="flex justify-center items-center h-[100vh]">
-          <div className="pt-6 px-8 bg rounded lg:w-[60%] lg:mx-0 mx-3 pb-10">
+      <div className="fixed lg:my-0 my-10 lg:top-0 left-0 w-full z-50">
+        <div className="flex justify-center items-center h-[100vh] overflow-scroll">
+          <div className="lg:pt-6 pt-20 px-8 bg rounded overflow-hidden lg:w-[60%] lg:mx-0 mx-3 pb-10">
             {success ? (
               <div className="flex justify-center items-center h-full">
                 <p className="bi-check-circle-fill text-6xl text-green-600"></p>
@@ -154,7 +154,7 @@ const Edit = ({ id, onClose }: Props) => {
                   ></button>
                 </div>
                 <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-                  <div className="grid grid-cols-2 gap-x-7">
+                  <div className="lg:grid grid-cols-2 gap-x-7">
                     <div>
                       {/* Name */}
                       <div className="">
@@ -219,7 +219,7 @@ const Edit = ({ id, onClose }: Props) => {
                         )}
                       </div>
 
-                      <div className="mt-4 text-center">
+                      <div className="lg:block hidden mt-4 text-center">
                         {loader ? <Loader /> : <Button label="Upload" />}
                       </div>
                     </div>
@@ -345,6 +345,10 @@ const Edit = ({ id, onClose }: Props) => {
                             {errors.description.message}
                           </p>
                         )}
+                      </div>
+
+                      <div className="lg:hidden block mt-4 text-center">
+                        {loader ? <Loader /> : <Button label="Upload" />}
                       </div>
                     </div>
                   </div>

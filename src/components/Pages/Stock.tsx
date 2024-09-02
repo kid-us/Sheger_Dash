@@ -5,11 +5,13 @@ import Nav from "../Dashboard/Nav";
 import useStock from "../../hooks/useStock";
 import { useState } from "react";
 import Edit from "../Modal/Edit";
+import Confirmation from "../Modal/Confirmation";
 
 const Stock = () => {
   const { stock } = useStock();
 
   const [edit, setEdit] = useState<boolean>(false);
+  const [deleteStock, setDeleteStock] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
 
   return (
@@ -23,6 +25,18 @@ const Stock = () => {
           }}
         />
       )}
+
+      {deleteStock && (
+        <Confirmation
+          name="Delete"
+          id={editId}
+          onDelete={() => {
+            setDeleteStock(false);
+            setEditId("");
+          }}
+        />
+      )}
+
       <div className="relative lg:grid md:grid grid-cols-11">
         {/* Small device Navbar */}
         <SmallNavbar active="Stock" />
@@ -41,11 +55,11 @@ const Stock = () => {
             Available Shoes in stocks
           </p>
 
-          <div className="grid grid-cols-4 gap-x-6">
+          <div className="lg:grid grid-cols-4 gap-x-6">
             {stock.map((s) => (
               <div
                 key={s.id}
-                className="bg-white rounded shadow shadow-zinc-900"
+                className="bg-white rounded shadow shadow-zinc-900 lg:mb-0 mb-8"
               >
                 <img
                   src={s.main_picture}
@@ -60,7 +74,13 @@ const Stock = () => {
                     }}
                     className="text-xl bi-pen-fill text-green-500"
                   ></button>
-                  <button className="text-xl bi-trash-fill text-red-500"></button>
+                  <button
+                    onClick={() => {
+                      setDeleteStock(true);
+                      setEditId(s.uid);
+                    }}
+                    className="text-xl bi-trash-fill text-red-500"
+                  ></button>
                 </div>
               </div>
             ))}
