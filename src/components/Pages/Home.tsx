@@ -31,7 +31,10 @@ const Home = () => {
 
           {/* Analytics */}
           <p className="text-black font-poppins my-8">Analytics</p>
-          <div className="grid grid-cols-2">
+          <div
+            className="lg:flex gap-x-14
+          "
+          >
             <Category />
             <Brands />
           </div>
