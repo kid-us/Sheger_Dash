@@ -6,8 +6,9 @@ interface Props {
 
 export const tabs = [
   { id: 1, icon: "bi-speedometer", title: "Dashboard", path: "/" },
-  { id: 2, icon: "bi-cloud-arrow-up-fill", title: "Upload", path: "/upload" },
-  { id: 3, icon: "bi-gear-fill", title: "Setting", path: "/setting" },
+  { id: 2, icon: "bi-border-width", title: "Orders", path: "/orders" },
+  { id: 3, icon: "bi-cloud-arrow-up-fill", title: "Upload", path: "/upload" },
+  { id: 4, icon: "bi-gear-fill", title: "Setting", path: "/setting" },
 ];
 
 const Sidebar = ({ active }: Props) => {
