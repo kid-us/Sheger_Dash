@@ -11,6 +11,8 @@ import Button from "../Button/Button";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../../services/request";
+import useBrands from "../../hooks/useBrands";
+import useCategories from "../../hooks/useCategories";
 
 const schema = z.object({
   description: z.string().min(10, {
@@ -46,6 +48,9 @@ const Uploads = () => {
 
   const [title] = useState<string>("Upload");
   useDocumentTitle(title);
+
+  const { brands } = useBrands();
+  const { categories } = useCategories();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -137,7 +142,7 @@ const Uploads = () => {
     if (optionalImg5) formData.append("optional_img5", optionalImg5);
 
     axios
-      .post(`${baseUrl}/course/courses`, formData, {
+      .post(`${baseUrl}store/create-item`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -145,8 +150,8 @@ const Uploads = () => {
       .then(() => {
         setSuccess(true);
         setTimeout(() => {
-          setSuccess(false);
-        }, 3000);
+          window.location.reload();
+        }, 2000);
       })
       .catch((error) => {
         setLoader(false);
@@ -196,6 +201,7 @@ const Uploads = () => {
                         className="hidden"
                         accept="image/*"
                         name="upload-file"
+                        id="upload-file"
                         onChange={handleFileChange}
                       />
                       {!preview && (
@@ -323,7 +329,7 @@ const Uploads = () => {
                 {/* Quantity */}
                 <div className="">
                   <label htmlFor="quantity" className="text-gray-500 text-sm">
-                    Quantity
+                    Stock
                   </label>
                   <input
                     {...register("quantity")}
@@ -372,7 +378,11 @@ const Uploads = () => {
                       name="category"
                       className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                     >
-                      <option value="men">Men</option>
+                      {categories.map((c) => (
+                        <option key={c.id} value={c.category_names}>
+                          {c.category_names}
+                        </option>
+                      ))}
                     </select>
 
                     {errors.category && (
@@ -394,7 +404,11 @@ const Uploads = () => {
                       name="brand"
                       className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                     >
-                      <option value="nike">Nike</option>
+                      {brands.map((b) => (
+                        <option key={b.id} value={b.brand_names}>
+                          {b.brand_names}
+                        </option>
+                      ))}
                     </select>
 
                     {errors.brand && (
@@ -413,7 +427,7 @@ const Uploads = () => {
                       htmlFor="sizeStart"
                       className="text-gray-500 text-sm"
                     >
-                      Start from
+                      Size from
                     </label>
                     <input
                       {...register("sizeStart")}
@@ -459,7 +473,7 @@ const Uploads = () => {
                   <textarea
                     {...register("description")}
                     name="description"
-                    className="h-24 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
+                    className="h-28 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
                   ></textarea>
 
                   {errors.description && (
