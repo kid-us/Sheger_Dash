@@ -4,6 +4,7 @@ import SmallNavbar from "../Dashboard/SmallNav";
 import { useState } from "react";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Category from "../Categories/Category";
+import Brands from "../Brands/Brands";
 
 const Home = () => {
   const [title] = useState<string>("Zusebingo | Dashboard");
@@ -32,9 +33,7 @@ const Home = () => {
           <p className="text-black font-poppins my-8">Analytics</p>
           <div className="grid grid-cols-2">
             <Category />
-            <div>
-              <p>Create Brands</p>
-            </div>
+            <Brands />
           </div>
         </div>
       </div>
