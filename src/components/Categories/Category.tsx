@@ -1,37 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import baseUrl from "../../services/request";
-
-interface CategoryItem {
-  id: number;
-  category_names: string;
-}
-
-interface Category {
-  categories: CategoryItem[];
-}
+import useCategories from "../../hooks/useCategories";
 
 const Category = () => {
   const [category, setCategory] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  const [categories, setCategories] = useState<CategoryItem[]>([]);
-
-  // Get Categories
-  useEffect(() => {
-    axios
-      .get<Category>(`${baseUrl}store/get-categories`, {
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-      })
-      .then((response) => {
-        setCategories(response.data.categories);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const { categories } = useCategories();
 
   // Create Category
   const handleSubmit = () => {
