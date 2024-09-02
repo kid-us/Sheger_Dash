@@ -13,7 +13,6 @@ const Home = () => {
 
   // const access_token = localStorage.getItem("token");
 
-
   return (
     <>
       <div className="relative lg:grid md:grid grid-cols-11">
