@@ -107,11 +107,11 @@ const Promo = () => {
           {promos.length > 0 ? (
             promos.map((p) => (
               <div key={p.id} className="grid grid-cols-12 mb-2 py-2">
-                <div className="mb-3 lg:col-span-7 col-span-11">
+                <div className="mb-3 lg:col-span-7 col-span-8">
                   <p className="text-xs font-bold">{p.code}</p>
                 </div>
 
-                <div className="col-span-3 me-5">
+                <div className="lg:col-span-3 col-span-2 me-5">
                   <input
                     className={`${
                       editId === p.id

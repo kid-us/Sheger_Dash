@@ -49,7 +49,7 @@ const Brands = () => {
 
   return (
     <>
-      <div>
+      <div className="lg:mt-0 mt-6">
         {/* Create Categories */}
         <label htmlFor="category" className="block mb-2 text-sm">
           Create Brands
