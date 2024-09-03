@@ -58,7 +58,7 @@ const Brands = () => {
           type="text"
           name="category"
           className="text-black bg-white rounded h-11 focus:outline-none ps-3 shadow shadow-zinc-900 lg:w-80 w-full block placeholder:text-sm"
-          placeholder="Brand name"
+          placeholder="Brand Name"
           onChange={(e) => setBrand(e.currentTarget.value)}
           value={brand}
         />
