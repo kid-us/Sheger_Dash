@@ -5,6 +5,7 @@ import { useState } from "react";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Category from "../Categories/Category";
 import Brands from "../Brands/Brands";
+import Promo from "../Promo/Promo";
 
 const Home = () => {
   const [title] = useState<string>("Shegerlace | Dashboard");
@@ -29,11 +30,12 @@ const Home = () => {
           {/* Analytics */}
           <p className="text-black font-poppins my-8">Analytics</p>
           <div
-            className="lg:flex gap-x-14
+            className="lg:grid grid-cols-3 gap-x-14
           "
           >
             <Category />
             <Brands />
+            <Promo />
           </div>
         </div>
       </div>
