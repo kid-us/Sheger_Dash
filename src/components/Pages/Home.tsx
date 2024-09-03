@@ -26,13 +26,9 @@ const Home = () => {
         <div className="lg:col-span-9 md:col-span-10 lg:p-8 p-3">
           {/* Nav */}
           <Nav />
-
           {/* Analytics */}
           <p className="text-black font-poppins my-8">Analytics</p>
-          <div
-            className="lg:grid grid-cols-3 gap-x-14
-          "
-          >
+          <div className="lg:grid grid-cols-3 gap-x-10">
             <Category />
             <Brands />
             <Promo />
