@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { tabs } from "./Sidebar";
 import { Link } from "react-router-dom";
+import { logo2 } from "../../assets";
 
 interface Props {
   active: string;
@@ -13,7 +14,7 @@ const SmallNavbar = ({ active }: Props) => {
     <>
       <div className="lg:hidden md:hidden hero-bg z-10 flex justify-between sticky top-0 shadow p-4 bg">
         <Link to="/">
-          <p className="text-black text-xl font-poppins">Shegerlace</p>
+          <img src={logo2} alt="Logo" className="w-9" />
         </Link>
         <p
           onClick={() => setMenu(!menu)}
