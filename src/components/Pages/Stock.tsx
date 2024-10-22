@@ -58,32 +58,37 @@ const Stock = () => {
             Available Shoes in stocks
           </p>
 
-          <div className="lg:grid grid-cols-4 gap-x-6">
+          <div className="lg:grid grid-cols-4 gap-5">
             {stock.map((s) => (
-              <div
-                key={s.id}
-                className="bg-white rounded shadow shadow-zinc-900 lg:mb-0 mb-8"
-              >
-                <img
-                  src={s.main_picture}
-                  alt="Shoes"
-                  className="h-60 w-full object-contain"
-                />
-                <div className="flex justify-between px-3 py-2">
+              <div key={s.id} className="lg:mb-1 mb-6">
+                <div className="bg-white rounded shadow ">
+                  <img
+                    src={s.main_picture}
+                    alt="Shoes"
+                    className="h-44 w-full object-contain"
+                  />
+                </div>
+                <div className="mt-1">
                   <button
                     onClick={() => {
                       setEdit(true);
                       setEditId(s.uid);
                     }}
-                    className="text-xl bi-pen-fill text-green-500"
-                  ></button>
+                    className="bi-pen-fill bg-green-500 text-white text-sm rounded p-2 w-full mb-1"
+                  >
+                    <span className="mx-2"></span>
+                    Edit
+                  </button>
                   <button
                     onClick={() => {
                       setDeleteStock(true);
                       setEditId(s.uid);
                     }}
-                    className="text-xl bi-trash-fill text-red-500"
-                  ></button>
+                    className="bi-trash-fill bg-red-500 text-white text-sm rounded p-2 w-full"
+                  >
+                    <span className="mx-2"></span>
+                    Edit
+                  </button>
                 </div>
               </div>
             ))}

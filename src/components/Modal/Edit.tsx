@@ -56,6 +56,8 @@ const Edit = ({ id, onClose }: Props) => {
   const { categories } = useCategories();
   const [success, setSuccess] = useState<boolean>(false);
 
+  const access_token = localStorage.getItem("token");
+
   const {
     register,
     handleSubmit,
@@ -118,6 +120,7 @@ const Edit = ({ id, onClose }: Props) => {
       .put(`${baseUrl}store/edit-shoe?shoe_id=${id}`, editData, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then((response) => {
@@ -136,225 +139,220 @@ const Edit = ({ id, onClose }: Props) => {
 
   return (
     <>
-      <div className="overlay w-full z-50"></div>
-      <div className="fixed top-5 left-0 w-full z-50">
-        <div className="flex justify-center items-center lg:h-[100vh]">
-          <div className="lg:pt-6 pt-5 px-8 bg rounded overflow-y-scroll h-[95vh] lg:w-[60%] lg:mx-0 mx-3 pb-10">
-            {success ? (
-              <div className="flex justify-center items-center h-full">
-                <p className="bi-check-circle-fill text-6xl text-green-600"></p>
-              </div>
-            ) : (
-              <>
-                <div className="flex justify-between">
-                  <p>Edit Shoes</p>
-                  <button
-                    onClick={() => onClose()}
-                    className="bi-x-lg"
-                  ></button>
+      <div className="bg-neutral-900/70 fixed top-0 w-full h-[100dvh] z-10"></div>
+
+      <div className="fixed z-40 w-full">
+        <div className="flex justify-center items-center h-[100dvh] w-full">
+          <div className="lg:pt-6 py-20 px-8 bg rounded overflow-y-scroll lg:w-[60%] lg:mx-0 mx-3">
+            {success && (
+              <p className="bi-check-circle-fill bg-green-600 text-white rounded p-1 mb-5">
+                <span className="mx-2"></span>
+                Product updated successfully.
+              </p>
+            )}
+
+            {/* Form */}
+            <div className="flex justify-between">
+              <p>Edit Shoes</p>
+              <button
+                onClick={() => onClose()}
+                className="bi-x-lg text-red-500 text-xl"
+              ></button>
+            </div>
+            <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
+              <div className="lg:grid grid-cols-2 gap-x-7">
+                <div>
+                  {/* Name */}
+                  <div className="">
+                    <label htmlFor="name" className="text-gray-500 text-sm">
+                      Name
+                    </label>
+                    <input
+                      {...register("name")}
+                      type="text"
+                      name="name"
+                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    />
+
+                    {errors.name && (
+                      <p className="text-xs mb-2 text-red-700 rounded">
+                        {errors.name.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Quantity */}
+                  <div className="">
+                    <label htmlFor="quantity" className="text-gray-500 text-sm">
+                      Stock
+                    </label>
+                    <input
+                      {...register("quantity")}
+                      type="text"
+                      name="quantity"
+                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    />
+
+                    {errors.quantity && (
+                      <p className="text-xs mb-2 text-red-700 rounded">
+                        {errors.quantity.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Price */}
+                  <div className="">
+                    <label htmlFor="price" className="text-gray-500 text-sm">
+                      Price
+                    </label>
+                    <input
+                      {...register("price")}
+                      type="text"
+                      name="price"
+                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    />
+
+                    {errors.price && (
+                      <p className="text-xs mb-2 text-red-700 rounded">
+                        {errors.price.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="lg:block hidden mt-4 text-center">
+                    {loader ? <Loader /> : <Button label="Upload" />}
+                  </div>
                 </div>
-                <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-                  <div className="lg:grid grid-cols-2 gap-x-7">
-                    <div>
-                      {/* Name */}
-                      <div className="">
-                        <label htmlFor="name" className="text-gray-500 text-sm">
-                          Name
-                        </label>
-                        <input
-                          {...register("name")}
-                          type="text"
-                          name="name"
-                          className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
-                        />
+                <div>
+                  {/* Category and Brand */}
+                  <div className="grid grid-cols-2 gap-x-5">
+                    {/* Category */}
+                    <div className="">
+                      <label
+                        htmlFor="sizeStart"
+                        className="text-gray-500 text-sm"
+                      >
+                        Category
+                      </label>
+                      <select
+                        {...register("category")}
+                        name="category"
+                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                      >
+                        {categories.map((c) => (
+                          <option key={c.id} value={c.category_names}>
+                            {c.category_names}
+                          </option>
+                        ))}
+                      </select>
 
-                        {errors.name && (
-                          <p className="text-xs mb-2 text-red-700 rounded">
-                            {errors.name.message}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Quantity */}
-                      <div className="">
-                        <label
-                          htmlFor="quantity"
-                          className="text-gray-500 text-sm"
-                        >
-                          Stock
-                        </label>
-                        <input
-                          {...register("quantity")}
-                          type="text"
-                          name="quantity"
-                          className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
-                        />
-
-                        {errors.quantity && (
-                          <p className="text-xs mb-2 text-red-700 rounded">
-                            {errors.quantity.message}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Price */}
-                      <div className="">
-                        <label
-                          htmlFor="price"
-                          className="text-gray-500 text-sm"
-                        >
-                          Price
-                        </label>
-                        <input
-                          {...register("price")}
-                          type="text"
-                          name="price"
-                          className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
-                        />
-
-                        {errors.price && (
-                          <p className="text-xs mb-2 text-red-700 rounded">
-                            {errors.price.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="lg:block hidden mt-4 text-center">
-                        {loader ? <Loader /> : <Button label="Upload" />}
-                      </div>
+                      {errors.category && (
+                        <p className="text-xs mb-2 text-red-700 rounded">
+                          {errors.category.message}
+                        </p>
+                      )}
                     </div>
-                    <div>
-                      {/* Category and Brand */}
-                      <div className="grid grid-cols-2 gap-x-5">
-                        {/* Category */}
-                        <div className="">
-                          <label
-                            htmlFor="sizeStart"
-                            className="text-gray-500 text-sm"
-                          >
-                            Category
-                          </label>
-                          <select
-                            {...register("category")}
-                            name="category"
-                            className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
-                          >
-                            {categories.map((c) => (
-                              <option key={c.id} value={c.category_names}>
-                                {c.category_names}
-                              </option>
-                            ))}
-                          </select>
+                    {/* Brand */}
+                    <div className="">
+                      <label
+                        htmlFor="sizeStart"
+                        className="text-gray-500 text-sm"
+                      >
+                        Brand
+                      </label>
+                      <select
+                        {...register("brand")}
+                        name="brand"
+                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                      >
+                        {brands.map((b) => (
+                          <option key={b.id} value={b.brand_names}>
+                            {b.brand_names}
+                          </option>
+                        ))}
+                      </select>
 
-                          {errors.category && (
-                            <p className="text-xs mb-2 text-red-700 rounded">
-                              {errors.category.message}
-                            </p>
-                          )}
-                        </div>
-                        {/* Brand */}
-                        <div className="">
-                          <label
-                            htmlFor="sizeStart"
-                            className="text-gray-500 text-sm"
-                          >
-                            Brand
-                          </label>
-                          <select
-                            {...register("brand")}
-                            name="brand"
-                            className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
-                          >
-                            {brands.map((b) => (
-                              <option key={b.id} value={b.brand_names}>
-                                {b.brand_names}
-                              </option>
-                            ))}
-                          </select>
-
-                          {errors.brand && (
-                            <p className="text-xs mb-2 text-red-700 rounded">
-                              {errors.brand.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Size */}
-                      <div className="grid grid-cols-2 gap-x-5">
-                        {/* Start */}
-                        <div className="">
-                          <label
-                            htmlFor="sizeStart"
-                            className="text-gray-500 text-sm"
-                          >
-                            Size from
-                          </label>
-                          <input
-                            {...register("sizeStart")}
-                            type="text"
-                            name="sizeStart"
-                            className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
-                          />
-
-                          {errors.sizeStart && (
-                            <p className="text-xs mb-2 text-red-700 rounded">
-                              {errors.sizeStart.message}
-                            </p>
-                          )}
-                        </div>
-                        {/* End */}
-                        <div className="">
-                          <label
-                            htmlFor="sizeEnd"
-                            className="text-gray-500 text-sm"
-                          >
-                            Size to
-                          </label>
-                          <input
-                            {...register("sizeEnd")}
-                            type="text"
-                            name="sizeEnd"
-                            className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
-                          />
-
-                          {errors.sizeEnd && (
-                            <p className="text-xs mb-2 text-red-700 rounded">
-                              {errors.sizeEnd.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <div className="">
-                        <label
-                          htmlFor="description"
-                          className="text-gray-500 text-sm"
-                        >
-                          Description
-                        </label>
-                        <textarea
-                          {...register("description")}
-                          name="description"
-                          className="h-28 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
-                        ></textarea>
-
-                        {errors.description && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.description.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="lg:hidden block mt-4 text-center">
-                        {loader ? <Loader /> : <Button label="Upload" />}
-                      </div>
+                      {errors.brand && (
+                        <p className="text-xs mb-2 text-red-700 rounded">
+                          {errors.brand.message}
+                        </p>
+                      )}
                     </div>
                   </div>
-                </form>
-              </>
-            )}
+
+                  {/* Size */}
+                  <div className="grid grid-cols-2 gap-x-5">
+                    {/* Start */}
+                    <div className="">
+                      <label
+                        htmlFor="sizeStart"
+                        className="text-gray-500 text-sm"
+                      >
+                        Size from
+                      </label>
+                      <input
+                        {...register("sizeStart")}
+                        type="text"
+                        name="sizeStart"
+                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      />
+
+                      {errors.sizeStart && (
+                        <p className="text-xs mb-2 text-red-700 rounded">
+                          {errors.sizeStart.message}
+                        </p>
+                      )}
+                    </div>
+                    {/* End */}
+                    <div className="">
+                      <label
+                        htmlFor="sizeEnd"
+                        className="text-gray-500 text-sm"
+                      >
+                        Size to
+                      </label>
+                      <input
+                        {...register("sizeEnd")}
+                        type="text"
+                        name="sizeEnd"
+                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      />
+
+                      {errors.sizeEnd && (
+                        <p className="text-xs mb-2 text-red-700 rounded">
+                          {errors.sizeEnd.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="">
+                    <label
+                      htmlFor="description"
+                      className="text-gray-500 text-sm"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      {...register("description")}
+                      name="description"
+                      className="h-32 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
+                    ></textarea>
+
+                    {errors.description && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.description.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="lg:hidden block mt-4 text-center">
+                    {loader ? <Loader /> : <Button label="Upload" />}
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

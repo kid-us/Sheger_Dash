@@ -182,6 +182,7 @@ const Uploads = () => {
           <Sidebar active="Upload" />
           {/* </div> */}
         </div>
+        
         <div className="lg:col-span-9 md:col-span-10 lg:p-8 p-3">
           {/* Nav */}
           <Nav />
