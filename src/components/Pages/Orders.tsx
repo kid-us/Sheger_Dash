@@ -38,6 +38,7 @@ interface OrderInfo {
   promocode: string;
   status: string;
   total_price: number;
+  phone_number: string;
 }
 
 interface Orders {
@@ -190,11 +191,11 @@ const Orders = () => {
               <p className="text-sm">Phone</p>
             </div>
 
-            <div>
+            <div className="col-span-2">
               <p className="text-sm">Total Price</p>
             </div>
 
-            <div>
+            <div className="col-span-2">
               <p className="text-sm">Date</p>
             </div>
 
@@ -244,15 +245,15 @@ const Orders = () => {
                 </div>
 
                 {/* Phone*/}
-                <div className="col-span-2 rounded mt-3 lg:ms-3">
+                <div className="col-span-2 rounded mt-3 lg:ms-5">
                   <p className="lg:hidden md:hidden text-xs text-gray-800 ">
                     Phone
                   </p>
-                  <p className="font-bold text-sm">0987654321</p>
+                  <p className="font-bold text-sm">{o.phone_number}</p>
                 </div>
 
                 {/* Total Price*/}
-                <div className="col-span-2 rounded mt-3">
+                <div className="col-span-2 rounded mt-3 lg:ms-4">
                   <p className="lg:hidden md:hidden text-xs text-gray-800 ">
                     Total Price
                   </p>
@@ -260,7 +261,7 @@ const Orders = () => {
                 </div>
 
                 {/* Date*/}
-                <div className="col-span-2 rounded mt-3">
+                <div className="col-span-2 rounded mt-3 lg:ms-4">
                   <p className="lg:hidden md:hidden text-xs text-gray-800 ">
                     Date
                   </p>
