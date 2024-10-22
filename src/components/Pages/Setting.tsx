@@ -10,12 +10,15 @@ import baseUrl from "../../services/request";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Loader from "../Button/Loader";
 import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
-  password: z.string().min(4, {
-    message: "Password required.",
+  password: z.string({
+    message: "Old Password required.",
   }),
-  username: z.string().min(1, { message: "Username required." }),
+  oldPassword: z.string().min(4, {
+    message: "New Password required and must be 4 characters long.",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -23,6 +26,8 @@ type FormData = z.infer<typeof schema>;
 const Setting = () => {
   const [title] = useState("Setting");
   useDocumentTitle(title);
+
+  const navigate = useNavigate();
 
   const access_token = localStorage.getItem("token");
 
@@ -41,12 +46,12 @@ const Setting = () => {
     setLoader(true);
 
     const updateData = {
-      username: data.username,
-      password: data.password,
+      old_password: data.oldPassword,
+      new_password: data.password,
     };
 
     axios
-      .put(`${baseUrl}/api/v2/auth/update`, updateData, {
+      .put(`${baseUrl}admin/change-password`, updateData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${access_token}`,
@@ -54,7 +59,8 @@ const Setting = () => {
         },
       })
       .then(() => {
-        window.location.reload();
+        localStorage.clear();
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);
@@ -91,28 +97,42 @@ const Setting = () => {
                   </p>
                 </div>
               )}
-              {/* Email */}
-              <div className="mb-5">
+
+              {/* Old Password */}
+              <div className="mb-5 relative">
                 <label
                   className="text-sm text-gray-700 block font-poppins"
-                  htmlFor="username"
+                  htmlFor="oldPassword"
                 >
-                  Username
+                  Old Password
                 </label>
-                <input
-                  {...register("username")}
-                  type="text"
-                  name="username"
-                  className="text-black font-poppins w-full py-4 mt-2 rounded focus:outline-none ps-3 shadow shadow-zinc-900 bg-white"
-                />
-                {errors.username && (
+                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow shadow-zinc-900 overflow-hidden">
+                  <div className="col-span-11">
+                    <input
+                      {...register("oldPassword")}
+                      type={passwordType ? "password" : "text"}
+                      name="oldPassword"
+                      className="text-black font-poppins w-full py-4 focus:outline-none ps-3"
+                    />
+                  </div>
+                  <p
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                      setPasswordType(!passwordType);
+                    }}
+                    className={`${
+                      showPassword ? "bi-eye" : "bi-eye-slash"
+                    } cursor-pointer text-black text-center text-lg pt-4 border-l border-gray-300`}
+                  ></p>
+                </div>
+                {errors.oldPassword && (
                   <p className="font-poppins text-red-600 text-xs mt-2 rounded py-[2px]">
-                    {errors.username.message}
+                    {errors.oldPassword.message}
                   </p>
                 )}
               </div>
 
-              {/* Password */}
+              {/* NewPassword */}
               <div className="mb-10 relative">
                 <label
                   className="text-sm text-gray-700 block font-poppins"
