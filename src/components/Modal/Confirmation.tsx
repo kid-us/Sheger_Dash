@@ -6,27 +6,51 @@ interface Props {
   onDelete: (value: boolean) => void;
   id: string;
   name: string;
+  info?: string;
 }
 
-const Confirmation = ({ onDelete, name, id }: Props) => {
+const Confirmation = ({ onDelete, name, id, info }: Props) => {
   const [confirmed, setConfirmed] = useState(false);
 
+  const access_token = localStorage.getItem("token");
+
   const handleConfirm = () => {
-    axios
-      .delete(`${baseUrl}store/delete-shoe?shoe_id=${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then(() => {
-        setConfirmed(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (info) {
+      axios
+        .put(
+          `${baseUrl}admin/change-status?status=${info}&order_id=${id}`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application",
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios
+        .delete(`${baseUrl}store/delete-shoe?shoe_id=${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
+        .then(() => {
+          setConfirmed(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -39,8 +63,9 @@ const Confirmation = ({ onDelete, name, id }: Props) => {
               <>
                 <h1 className="text-xl ">{name}</h1>
                 <p className="text-sm my-5 font-poppins">
-                  Are you sure you want to delete the product? This action
-                  cannot be undone. Do you want to proceed
+                  Are you sure you want to delete the{" "}
+                  {info ? "order" : "product"}? This action cannot be undone. Do
+                  you want to proceed
                 </p>
                 <div className="flex justify-between gap-x-10">
                   <button
@@ -53,7 +78,7 @@ const Confirmation = ({ onDelete, name, id }: Props) => {
                     onClick={() => handleConfirm()}
                     className={`w-full bg-red-500 shadow shadow-zinc-900 rounded text-white h-12 font-poppins`}
                   >
-                    {name === "Happy" ? "Create" : name}
+                    Delete
                   </button>
                 </div>
               </>
@@ -61,7 +86,7 @@ const Confirmation = ({ onDelete, name, id }: Props) => {
               <div className="text-center mt-4">
                 <p className="bi-check-circle-fill text-green-500 text-4xl"></p>
                 <p className="text-black mt-5 text-xl font-poppins first-letter:uppercase">
-                  Product deleted successfully!
+                  {info ? "Order" : "Product"} deleted successfully!
                 </p>
               </div>
             )}

@@ -1,3 +1,4 @@
-import img from "./hero1.png";
+import logo from "./logo_large.png";
+import logo2 from "./logo_small.png";
 
-export { img };
+export { logo, logo2 };

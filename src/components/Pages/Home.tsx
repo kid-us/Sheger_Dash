@@ -10,7 +10,6 @@ import Promo from "../Promo/Promo";
 const Home = () => {
   const [title] = useState<string>("Shegerlace | Dashboard");
   useDocumentTitle(title);
-  // const access_token = localStorage.getItem("token");
 
   return (
     <>
