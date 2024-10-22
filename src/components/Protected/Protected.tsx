@@ -27,9 +27,6 @@ const Protected = ({ children }: ProtectedProps) => {
             "Access-Control-Allow-Origin": "*",
           },
         })
-        .then((response) => {
-          console.log(response.data);
-        })
         .catch(() => {
           navigate("/login");
         });
