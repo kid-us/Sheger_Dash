@@ -52,9 +52,8 @@ const Stock = () => {
         <div className="lg:col-span-9 md:col-span-10 lg:p-8 p-3">
           {/* Nav */}
           <Nav />
-
           {/* Analytics */}
-          <p className="text-black font-poppins my-5 text-xl">
+          <p className="text-black font-poppins my-4 text-xl font-bold">
             Available Shoes in stocks
           </p>
 

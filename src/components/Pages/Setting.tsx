@@ -83,9 +83,9 @@ const Setting = () => {
         <div className="lg:col-span-9 md:col-span-10 lg:p-8">
           {/* Nav */}
           <Nav />
-          <div className="lg:grid grid-cols-2 bg2 rounded lg:p-8 lg:mx-0 mx-1 p-5 mt-10">
+          <div className="lg:grid grid-cols-2 bg2 rounded lg:p-8 lg:mx-0 mx-1 p-5 mt-5">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <p className="font-poppins mb-5 text-xl">
+              <p className="font-poppins mb-5 text-xl font-bold">
                 Update your credentials
               </p>
               {/* Update error */}

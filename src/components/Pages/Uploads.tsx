@@ -182,14 +182,16 @@ const Uploads = () => {
           <Sidebar active="Upload" />
           {/* </div> */}
         </div>
-        
+
         <div className="lg:col-span-9 md:col-span-10 lg:p-8 p-3">
           {/* Nav */}
           <Nav />
 
           {/* Upload */}
-          <div className="flex my-8 justify-between">
-            <p className="text-black font-poppins text-xl">Upload Shoes</p>
+          <div className="flex my-5 justify-between">
+            <p className="text-black font-poppins text-xl font-bold">
+              Upload Shoes
+            </p>
 
             {success && (
               <p className="rounded bg-green-500 text-white shadow w-96 text-center p-1">
