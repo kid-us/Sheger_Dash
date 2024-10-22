@@ -17,9 +17,7 @@ const schema = z.object({
   description: z.string().min(10, {
     message: "Description required and must be grater than 10 chars.",
   }),
-  price: z.string().min(1, {
-    message: "Price required.",
-  }),
+  price: z.number({ invalid_type_error: "Price required." }),
   quantity: z.string().min(1, {
     message: "Quantity required.",
   }),
@@ -160,6 +158,21 @@ const Uploads = () => {
 
   return (
     <>
+      {/* Success */}
+      {success && (
+        <>
+          <div className="bg-neutral-900/70 fixed top-0 w-full h-[100dvh] z-10"></div>
+          <div className="fixed z-40 w-full">
+            <div className="flex justify-center items-center h-[100dvh] w-full">
+              <div className="w-[30%] bg-white p-4 rounded text-center">
+                <p className="bi-check-circle-fill text-green-600 text-4xl"></p>
+                <p className="mt-2 text-lg">Shoes Uploaded</p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className="relative lg:grid md:grid grid-cols-11">
         {/* Small device Navbar */}
         <SmallNavbar active="Upload" />
@@ -350,8 +363,8 @@ const Uploads = () => {
                     Price
                   </label>
                   <input
-                    {...register("price")}
-                    type="text"
+                    {...register("price", { valueAsNumber: true })}
+                    type="number"
                     name="price"
                     className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
                   />
