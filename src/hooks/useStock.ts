@@ -22,6 +22,8 @@ export interface AllShoes {
 const useStock = () => {
   const [stock, setStock] = useState<Shoes[]>([]);
 
+  const access_token = localStorage.getItem("token");
+
   useEffect(() => {
     // Fetch Brands
     const fetchStocks = async () => {
@@ -31,7 +33,7 @@ const useStock = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420",
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

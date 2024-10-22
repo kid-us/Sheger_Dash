@@ -6,16 +6,52 @@ import Setting from "./components/Pages/Setting";
 import Uploads from "./components/Pages/Uploads";
 import Orders from "./components/Pages/Orders";
 import Stock from "./components/Pages/Stock";
+import Protected from "./components/Protected/Protected";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/setting" element={<Setting />} />
-        <Route path="/upload" element={<Uploads />} />
-        <Route path="/stock" element={<Stock />} />
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <Home />
+            </Protected>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <Protected>
+              <Orders />
+            </Protected>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <Protected>
+              <Setting />
+            </Protected>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <Protected>
+              <Uploads />
+            </Protected>
+          }
+        />
+        <Route
+          path="/stock"
+          element={
+            <Protected>
+              <Stock />
+            </Protected>
+          }
+        />
         <Route path="/login" element={<Login />} />
       </Routes>
     </>

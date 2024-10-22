@@ -14,6 +14,8 @@ export interface Category {
 const useCategories = () => {
   const [categories, setCategories] = useState<CategoryItem[]>([]);
 
+  const access_token = localStorage.getItem("token");
+
   useEffect(() => {
     // Fetch Brands
     const fetchBrands = async () => {
@@ -23,7 +25,7 @@ const useCategories = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420",
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );

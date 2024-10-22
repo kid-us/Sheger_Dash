@@ -13,6 +13,8 @@ const Promo = () => {
   const [editId, setEditId] = useState<number>(0);
   const [newDiscount, setNewDiscount] = useState<string>("");
 
+  const access_token = localStorage.getItem("token");
+
   // Create Promo
   const handleSubmit = () => {
     if (promo.length < 1) {
@@ -30,6 +32,7 @@ const Promo = () => {
       .post(`${baseUrl}admin/create-promo-code`, data, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {
@@ -46,6 +49,7 @@ const Promo = () => {
       .delete(`${baseUrl}admin/delete-promo-code?promo_id=${id}`, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {
@@ -66,6 +70,7 @@ const Promo = () => {
       .put(`${baseUrl}admin/edit-discount`, data, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {

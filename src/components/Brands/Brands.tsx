@@ -8,6 +8,8 @@ const Brands = () => {
   const [error, setError] = useState<boolean>(false);
   const { brands } = useBrands();
 
+  const access_token = localStorage.getItem("token");
+
   // Create Brand
   const handleSubmit = () => {
     if (brand.length < 3) {
@@ -21,6 +23,7 @@ const Brands = () => {
       .post(`${baseUrl}store/create-brand?brand=${brand}`, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {
@@ -37,6 +40,7 @@ const Brands = () => {
       .delete(`${baseUrl}store/delete-brand?brand_id=${id}`, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {

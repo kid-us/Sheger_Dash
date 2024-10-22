@@ -36,19 +36,20 @@ const Login = () => {
 
   const onSubmit = (data: FieldValues) => {
     setLoader(true);
+
     const logData = {
       username: data.username,
       password: data.password,
     };
 
     axios
-      .post(`${baseUrl}/api/v2/auth/admin/login`, logData, {
+      .post(`${baseUrl}admin/login`, logData, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.access_token);
         navigate("/");
       })
       .catch((error) => {
@@ -57,6 +58,7 @@ const Login = () => {
         setLoginError(true);
       });
   };
+
   return (
     <div className="bg h-[100dvh] w-full">
       <div className="container mx-auto flex justify-center items-center h-full">

@@ -8,6 +8,8 @@ const Category = () => {
   const [error, setError] = useState<boolean>(false);
   const { categories } = useCategories();
 
+  const access_token = localStorage.getItem("token");
+
   // Create Category
   const handleSubmit = () => {
     if (category.length < 3) {
@@ -21,6 +23,7 @@ const Category = () => {
       .post(`${baseUrl}store/create-category?category=${category}`, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {
@@ -37,6 +40,7 @@ const Category = () => {
       .delete(`${baseUrl}store/delete-category?category_id=${id}`, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {

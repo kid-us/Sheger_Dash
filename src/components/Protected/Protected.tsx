@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import baseUrl from "../../services/request";
-import useAuth from "../../store/useAuth";
 
 interface ProtectedProps {
   children: React.ReactNode;
@@ -18,12 +17,10 @@ const Protected = ({ children }: ProtectedProps) => {
 
   const navigate = useNavigate();
 
-  const { login } = useAuth();
-
   useEffect(() => {
     if (access_token) {
       axios
-        .get<UserProps>(`${baseUrl}/api/v2/auth/admin/me`, {
+        .get<UserProps>(`${baseUrl}admin/me`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${access_token}`,
@@ -31,7 +28,7 @@ const Protected = ({ children }: ProtectedProps) => {
           },
         })
         .then((response) => {
-          login(response.data.id, response.data.username);
+          console.log(response.data);
         })
         .catch(() => {
           navigate("/login");

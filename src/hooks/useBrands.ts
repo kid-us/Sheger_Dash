@@ -14,6 +14,8 @@ export interface Brand {
 const useBrands = () => {
   const [brands, setBrands] = useState<BrandItem[]>([]);
 
+  const access_token = localStorage.getItem("token");
+
   useEffect(() => {
     // Fetch Brands
     const fetchBrands = async () => {
@@ -21,6 +23,7 @@ const useBrands = () => {
         const response = await axios.get<Brand>(`${baseUrl}store/get-brands`, {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
             "ngrok-skip-browser-warning": "69420",
           },
         });

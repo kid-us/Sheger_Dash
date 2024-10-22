@@ -13,6 +13,8 @@ export interface Promo {
 }
 
 const usePromo = () => {
+  const access_token = localStorage.getItem("token");
+
   const [promos, setPromos] = useState<PromoItem[]>([]);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const usePromo = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420",
+              Authorization: `Bearer ${access_token}`,
             },
           }
         );
