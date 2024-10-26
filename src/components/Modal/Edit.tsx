@@ -139,13 +139,13 @@ const Edit = ({ id, onClose }: Props) => {
 
   return (
     <>
-      <div className="bg-neutral-900/70 fixed top-0 w-full h-[100dvh] z-10"></div>
+      <div className="bg-neutral-900/70 fixed top-0 w-full h-[100dvh] z-40"></div>
 
-      <div className="fixed z-40 w-full">
+      <div className="fixed z-[50] w-full top-0">
         <div className="flex justify-center items-center h-[100dvh] w-full">
-          <div className="lg:pt-6 py-20 px-8 bg rounded overflow-y-scroll lg:w-[60%] lg:mx-0 mx-3">
+          <div className="lg:pt-6 py-8 px-8 bg rounded overflow-y-scroll lg:w-[60%] h-[95dvh] lg:mx-0 mx-2">
             {success && (
-              <p className="bi-check-circle-fill bg-green-600 text-white rounded p-1 mb-5">
+              <p className="fixed top-20 bi-check-circle-fill bg-green-600 text-white rounded p-1 mb-5">
                 <span className="mx-2"></span>
                 Product updated successfully.
               </p>
@@ -171,7 +171,7 @@ const Edit = ({ id, onClose }: Props) => {
                       {...register("name")}
                       type="text"
                       name="name"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                     />
 
                     {errors.name && (
@@ -190,7 +190,7 @@ const Edit = ({ id, onClose }: Props) => {
                       {...register("quantity")}
                       type="text"
                       name="quantity"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                     />
 
                     {errors.quantity && (
@@ -209,7 +209,7 @@ const Edit = ({ id, onClose }: Props) => {
                       {...register("price")}
                       type="text"
                       name="price"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                     />
 
                     {errors.price && (
@@ -237,7 +237,7 @@ const Edit = ({ id, onClose }: Props) => {
                       <select
                         {...register("category")}
                         name="category"
-                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                        className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                       >
                         {categories.map((c) => (
                           <option key={c.id} value={c.category_names}>
@@ -263,7 +263,7 @@ const Edit = ({ id, onClose }: Props) => {
                       <select
                         {...register("brand")}
                         name="brand"
-                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                        className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                       >
                         {brands.map((b) => (
                           <option key={b.id} value={b.brand_names}>
@@ -294,7 +294,7 @@ const Edit = ({ id, onClose }: Props) => {
                         {...register("sizeStart")}
                         type="text"
                         name="sizeStart"
-                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                        className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                       />
 
                       {errors.sizeStart && (
@@ -315,7 +315,7 @@ const Edit = ({ id, onClose }: Props) => {
                         {...register("sizeEnd")}
                         type="text"
                         name="sizeEnd"
-                        className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                        className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                       />
 
                       {errors.sizeEnd && (
@@ -337,7 +337,7 @@ const Edit = ({ id, onClose }: Props) => {
                     <textarea
                       {...register("description")}
                       name="description"
-                      className="h-32 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
+                      className="h-32 font-poppins resize-none bg-white shadow focus:outline-none rounded mt-3 w-full px-4 pt-2"
                     ></textarea>
 
                     {errors.description && (
