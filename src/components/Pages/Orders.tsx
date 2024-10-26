@@ -91,8 +91,6 @@ const Orders = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-
         setAllData(response.data);
         setOrders(response.data.orders);
       })
@@ -185,39 +183,15 @@ const Orders = () => {
           {/* Table */}
           <div className="lg:grid md:grid hidden lg:grid-cols-12 md:grid-cols-14 grid-cols-1 gap-x-5 text-white rounded py-3 bg-gray-800 px-2">
             <div className="col-span-2">
-              <p className="text-xs">Name</p>
+              <p className="text-sm">Name</p>
             </div>
 
             <div className="col-span-3">
-              <p className="text-xs">Order Info</p>
+              <p className="text-sm">Order Info</p>
             </div>
+            <div className="col-span-5"></div>
 
-            {/* <div className="col-span-1 ms-3">
-              <p className="text-xs">Phone</p>
-            </div>
-
-            <div className="col-span-2">
-              <p className="text-xs">Total Price</p>
-            </div>
-
-            <div className="col-span-2">
-              <p className="text-xs">Ordered Date</p>
-            </div>
-
-            <div className="col-span-2">
-              <p className="text-xs">Delivery Date</p>
-            </div> */}
-            <div className="col-span-7"></div>
-
-            {/* <div className="col-span-1">
-              <p className="text-xs">Kfle Ketema</p>
-            </div>
-
-            <div className="col-span-2">
-              <p className="text-xs">Address</p>
-            </div> */}
-
-            <div className="col-span-1"></div>
+            <div className="col-span-2"></div>
           </div>
 
           {/* Orders */}
@@ -238,11 +212,13 @@ const Orders = () => {
                 </div>
 
                 {/* Order Information */}
-                <div className="col-span-3 border border-gray-400 rounded">
+                <div className="lg:col-span-3 col-span-12 border border-gray-400 rounded lg:my-0 my-4">
                   {o.order_items.map((item) => (
                     <div
                       key={item.uid}
-                      className="grid grid-cols-6 gap-x-5 border-b"
+                      className={`grid grid-cols-6 gap-x-5 ${
+                        o.order_items.length > 1 && "border-b"
+                      }`}
                     >
                       <div className="col-span-3">
                         <img
@@ -267,21 +243,21 @@ const Orders = () => {
                   ))}
                 </div>
 
-                <div className="col-span-5">
-                  <div className="grid grid-cols-12">
+                <div className="lg:col-span-5 col-span-12">
+                  <div className="grid grid-cols-12 gap-y-3">
                     {/* Phone*/}
-                    <div className="col-span-3">
-                      <p className="text-sm text-gray-800 ">Phone</p>
+                    <div className="lg:col-span-3 col-span-6">
+                      <p className="text-xs text-gray-800 ">Phone</p>
                       <p className="font-bold text-sm">{o.phone_number}</p>
                     </div>
 
                     {/* Total Price*/}
-                    <div className="col-span-3 mt-3 ">
+                    <div className="lg:col-span-3 col-span-6">
                       <p className="text-xs text-gray-800 ">Total Price</p>
                       <p className="font-bold text-xs">{o.total_price}</p>
                     </div>
                     {/* Ordered Date*/}
-                    <div className="col-span-3 rounded mt-3">
+                    <div className="lg:col-span-3 col-span-6">
                       <p className="text-xs text-gray-800 ">Ordered Date</p>
                       <p className="font-bold text-xs">
                         {formatDate(o.created_at)}
@@ -289,14 +265,14 @@ const Orders = () => {
                     </div>
 
                     {/* Delivery Date */}
-                    <div className="col-span-3 rounded mt-3">
+                    <div className="lg:col-span-3 col-span-6">
                       <p className="text-xs text-gray-800 ">Delivery Date</p>
                       <p className="font-bold text-xs">
                         {formatDate(o.delivery_date)}
                       </p>
                     </div>
                     {/* Kfle ketema */}
-                    <div className="col-span-3 rounded mt-3 ">
+                    <div className="lg:col-span-3 col-span-6 mt-3">
                       <p className="text-xs text-gray-800 ">Kfle Ketema</p>
                       <p className="font-bold text-sm first-letter:uppercase text-ellipsis overflow-hidden">
                         {o.kfle_ketema}
@@ -312,7 +288,7 @@ const Orders = () => {
                 </div>
 
                 {/* Edit */}
-                <div className="justify-end relative lg:mt-0 mt-5 lg:col-span-1 col-span-2 ">
+                <div className="justify-end relative lg:mt-0 mt-2 lg:col-span-2 col-span-12 mb-5">
                   {option && selectedId === o.id && (
                     <div className="mt-7 me-2">
                       {active === "pending" && (

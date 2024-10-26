@@ -15,7 +15,7 @@ const Confirmation = ({ onDelete, name, id, info }: Props) => {
 
   const access_token = localStorage.getItem("admin_token");
 
-  const [loader, setLoader] = useState<boolean>(true);
+  const [loader, setLoader] = useState<boolean>(false);
 
   const handleConfirm = () => {
     setLoader(true);
@@ -31,8 +31,11 @@ const Confirmation = ({ onDelete, name, id, info }: Props) => {
             },
           }
         )
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          setConfirmed(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         })
         .catch((error) => {
           console.log(error);
