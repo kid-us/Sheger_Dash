@@ -12,7 +12,7 @@ const SmallNavbar = ({ active }: Props) => {
 
   return (
     <>
-      <div className="lg:hidden md:hidden hero-bg z-10 flex justify-between sticky top-0 shadow p-4 bg">
+      <div className="lg:hidden md:hidden hero-bg z-10 flex justify-between sticky top-0 shadow-lg p-4 bg">
         <Link to="/">
           <img src={logo2} alt="Logo" className="w-9" />
         </Link>
