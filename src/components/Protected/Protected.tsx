@@ -13,7 +13,7 @@ export interface UserProps {
 }
 
 const Protected = ({ children }: ProtectedProps) => {
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const navigate = useNavigate();
 

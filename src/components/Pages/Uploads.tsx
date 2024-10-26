@@ -41,7 +41,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Uploads = () => {
-  // const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const [title] = useState<string>("Upload");
   useDocumentTitle(title);
@@ -142,6 +142,7 @@ const Uploads = () => {
       .post(`${baseUrl}store/create-item`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then(() => {

@@ -8,7 +8,7 @@ const Category = () => {
   const [error, setError] = useState<boolean>(false);
   const { categories } = useCategories();
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   // Create Category
   const handleSubmit = () => {

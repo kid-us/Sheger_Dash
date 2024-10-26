@@ -43,7 +43,7 @@ const Home = () => {
   const [stock, setStock] = useState<StockShoes[]>([]);
   const [page, setPage] = useState<number>(1);
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   // Get out of stock items.
   useEffect(() => {

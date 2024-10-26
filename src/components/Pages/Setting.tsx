@@ -29,7 +29,7 @@ const Setting = () => {
 
   const navigate = useNavigate();
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordType, setPasswordType] = useState(true);

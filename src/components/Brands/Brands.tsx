@@ -8,7 +8,7 @@ const Brands = () => {
   const [error, setError] = useState<boolean>(false);
   const { brands } = useBrands();
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   // Create Brand
   const handleSubmit = () => {

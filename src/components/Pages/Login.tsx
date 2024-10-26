@@ -49,7 +49,7 @@ const Login = () => {
         },
       })
       .then((response) => {
-        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem("admin_token", response.data.access_token);
         navigate("/");
       })
       .catch((error) => {

@@ -39,6 +39,9 @@ interface OrderInfo {
   status: string;
   total_price: number;
   phone_number: string;
+  kfle_ketema: string;
+  delivery_date: string;
+  address: string;
 }
 
 interface Orders {
@@ -68,7 +71,7 @@ const Orders = () => {
   const [title] = useState("Orders");
   useDocumentTitle(title);
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const [active, setActive] = useState<string>("pending");
   const [option, setOption] = useState<boolean>(false);
@@ -88,6 +91,8 @@ const Orders = () => {
         },
       })
       .then((response) => {
+        console.log(response.data);
+
         setAllData(response.data);
         setOrders(response.data.orders);
       })
@@ -178,26 +183,39 @@ const Orders = () => {
           </div>
 
           {/* Table */}
-          <div className="lg:grid md:grid hidden lg:grid-cols-12 md:grid-cols-12 grid-cols-1 gap-x-5 text-white rounded py-3 bg-gray-800 px-2">
+          <div className="lg:grid md:grid hidden lg:grid-cols-12 md:grid-cols-14 grid-cols-1 gap-x-5 text-white rounded py-3 bg-gray-800 px-2">
             <div className="col-span-2">
-              <p className="text-sm">Ordered By</p>
+              <p className="text-xs">Name</p>
             </div>
 
             <div className="col-span-3">
-              <p className="text-sm">Order Information</p>
+              <p className="text-xs">Order Info</p>
             </div>
 
-            <div className="col-span-2 ms-3">
-              <p className="text-sm">Phone</p>
-            </div>
-
-            <div className="col-span-2">
-              <p className="text-sm">Total Price</p>
+            {/* <div className="col-span-1 ms-3">
+              <p className="text-xs">Phone</p>
             </div>
 
             <div className="col-span-2">
-              <p className="text-sm">Date</p>
+              <p className="text-xs">Total Price</p>
             </div>
+
+            <div className="col-span-2">
+              <p className="text-xs">Ordered Date</p>
+            </div>
+
+            <div className="col-span-2">
+              <p className="text-xs">Delivery Date</p>
+            </div> */}
+            <div className="col-span-7"></div>
+
+            {/* <div className="col-span-1">
+              <p className="text-xs">Kfle Ketema</p>
+            </div>
+
+            <div className="col-span-2">
+              <p className="text-xs">Address</p>
+            </div> */}
 
             <div className="col-span-1"></div>
           </div>
@@ -207,20 +225,25 @@ const Orders = () => {
             orders.map((o) => (
               <div
                 key={o.id}
-                className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-4 hero-bg text-black lg:px-2 md:px-2 px-4 pt-2 bg-white rounded shadow mb-2 border-b-2 border-gray-400 pb-3"
+                className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-4 gap-x-4 text-black lg:px-2 md:px-2 px-4 pt-2 bg-white rounded shadow mb-2 border-b-2 border-gray-400 pb-3"
               >
                 {/* Ordered By*/}
                 <div className="col-span-2 rounded mt-3">
                   <p className="lg:hidden md:hidden text-xs text-gray-800 ">
-                    Ordered By
+                    Name
                   </p>
-                  <p className="font-bold">{o.customer_name}</p>
+                  <p title={o.customer_name} className="font-bold">
+                    {o.customer_name}
+                  </p>
                 </div>
 
                 {/* Order Information */}
-                <div className="col-span-3">
+                <div className="col-span-3 border border-gray-400 rounded">
                   {o.order_items.map((item) => (
-                    <div key={item.uid} className="grid grid-cols-6 gap-x-5">
+                    <div
+                      key={item.uid}
+                      className="grid grid-cols-6 gap-x-5 border-b"
+                    >
                       <div className="col-span-3">
                         <img
                           src={item.main_picture}
@@ -229,45 +252,63 @@ const Orders = () => {
                         />
                       </div>
                       <div className="mt-4">
-                        <p className="text-sm text-gray-500">Price</p>
-                        <p>{item.price}</p>
+                        <p className="text-xs text-gray-500">Price</p>
+                        <p className="text-sm">{item.price}</p>
                       </div>
                       <div className="mt-4">
-                        <p className="text-sm text-gray-500">Qty</p>
-                        <p>{item.quantity}</p>
+                        <p className="text-xs text-gray-500">Qty</p>
+                        <p className="text-sm">{item.quantity}</p>
                       </div>
                       <div className="mt-4">
-                        <p className="text-sm text-gray-500">Size</p>
-                        <p>{item.size}</p>
+                        <p className="text-xs text-gray-500">Size</p>
+                        <p className="text-sm">{item.size}</p>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Phone*/}
-                <div className="col-span-2 rounded mt-3 lg:ms-5">
-                  <p className="lg:hidden md:hidden text-xs text-gray-800 ">
-                    Phone
-                  </p>
-                  <p className="font-bold text-sm">{o.phone_number}</p>
-                </div>
+                <div className="col-span-5">
+                  <div className="grid grid-cols-12">
+                    {/* Phone*/}
+                    <div className="col-span-3">
+                      <p className="text-sm text-gray-800 ">Phone</p>
+                      <p className="font-bold text-sm">{o.phone_number}</p>
+                    </div>
 
-                {/* Total Price*/}
-                <div className="col-span-2 rounded mt-3 lg:ms-4">
-                  <p className="lg:hidden md:hidden text-xs text-gray-800 ">
-                    Total Price
-                  </p>
-                  <p className="font-bold text-sm">{o.total_price}</p>
-                </div>
+                    {/* Total Price*/}
+                    <div className="col-span-3 mt-3 ">
+                      <p className="text-xs text-gray-800 ">Total Price</p>
+                      <p className="font-bold text-xs">{o.total_price}</p>
+                    </div>
+                    {/* Ordered Date*/}
+                    <div className="col-span-3 rounded mt-3">
+                      <p className="text-xs text-gray-800 ">Ordered Date</p>
+                      <p className="font-bold text-xs">
+                        {formatDate(o.created_at)}
+                      </p>
+                    </div>
 
-                {/* Date*/}
-                <div className="col-span-2 rounded mt-3 lg:ms-4">
-                  <p className="lg:hidden md:hidden text-xs text-gray-800 ">
-                    Date
-                  </p>
-                  <p className="font-bold text-sm">
-                    {formatDate(o.created_at)}
-                  </p>
+                    {/* Delivery Date */}
+                    <div className="col-span-3 rounded mt-3">
+                      <p className="text-xs text-gray-800 ">Delivery Date</p>
+                      <p className="font-bold text-xs">
+                        {formatDate(o.delivery_date)}
+                      </p>
+                    </div>
+                    {/* Kfle ketema */}
+                    <div className="col-span-3 rounded mt-3 ">
+                      <p className="text-xs text-gray-800 ">Kfle Ketema</p>
+                      <p className="font-bold text-sm first-letter:uppercase text-ellipsis overflow-hidden">
+                        {o.kfle_ketema}
+                      </p>
+                    </div>
+
+                    {/* Address */}
+                    <div className="col-span-4 rounded mt-3 ">
+                      <p className="text-xs text-gray-800 ">Address</p>
+                      <p className="font-bold text-sm">{o.address}</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Edit */}

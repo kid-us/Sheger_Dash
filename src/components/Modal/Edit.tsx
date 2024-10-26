@@ -56,7 +56,7 @@ const Edit = ({ id, onClose }: Props) => {
   const { categories } = useCategories();
   const [success, setSuccess] = useState<boolean>(false);
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const {
     register,

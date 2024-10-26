@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import baseUrl from "../../services/request";
+import Loader from "../Button/Loader";
 
 interface Props {
   onDelete: (value: boolean) => void;
@@ -12,9 +13,12 @@ interface Props {
 const Confirmation = ({ onDelete, name, id, info }: Props) => {
   const [confirmed, setConfirmed] = useState(false);
 
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
+
+  const [loader, setLoader] = useState<boolean>(true);
 
   const handleConfirm = () => {
+    setLoader(true);
     if (info) {
       axios
         .put(
@@ -74,12 +78,16 @@ const Confirmation = ({ onDelete, name, id, info }: Props) => {
                   >
                     Cancel
                   </button>
-                  <button
-                    onClick={() => handleConfirm()}
-                    className={`w-full bg-red-500 shadow shadow-zinc-900 rounded text-white h-12 font-poppins`}
-                  >
-                    Delete
-                  </button>
+                  {loader ? (
+                    <Loader />
+                  ) : (
+                    <button
+                      onClick={() => handleConfirm()}
+                      className={`w-full bg-red-500 shadow shadow-zinc-900 rounded text-white h-12 font-poppins`}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </>
             ) : (
