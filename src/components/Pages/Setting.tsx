@@ -106,7 +106,7 @@ const Setting = () => {
                 >
                   Old Password
                 </label>
-                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow shadow-zinc-900 overflow-hidden">
+                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow overflow-hidden">
                   <div className="col-span-11">
                     <input
                       {...register("oldPassword")}
@@ -140,7 +140,7 @@ const Setting = () => {
                 >
                   Password
                 </label>
-                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow shadow-zinc-900 overflow-hidden">
+                <div className="grid grid-cols-12 bg-white mt-2 rounded shadow overflow-hidden">
                   <div className="col-span-11">
                     <input
                       {...register("password")}

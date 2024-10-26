@@ -209,7 +209,7 @@ const Uploads = () => {
                   <p className="text-gray-600">Shoes main Image</p>
                   {!preview && (
                     <div
-                      className={`border rounded bg-white shadow shadow-zinc-900 h- p-1 my-2`}
+                      className={`border rounded bg-white shadow h- p-1 my-2`}
                     >
                       <input
                         ref={inputRef}
@@ -232,7 +232,7 @@ const Uploads = () => {
                   )}
 
                   {/* Image Preview */}
-                  <div className="relative my-2">
+                  <div className="relative my-2 border border-gray-400 rounded">
                     {preview && (
                       <>
                         <img
@@ -245,7 +245,7 @@ const Uploads = () => {
                           onClick={() => handleFileRemoved()}
                           className="absolute -top-2 right-3 z-10"
                         >
-                          <p className="bi-x bg-red-700 shadow shadow-zinc-900 h-6 w-6 pt-1 rounded-full text-center cursor-pointer text-white text-sm"></p>
+                          <p className="bi-x bg-red-700 shadow h-6 w-6 pt-1 rounded-full text-center cursor-pointer text-white text-sm"></p>
                         </div>
                       </>
                     )}
@@ -263,14 +263,17 @@ const Uploads = () => {
                     htmlFor="name"
                     className="text-gray-500 text-sm block mb-3"
                   >
-                    Optional Images choose 5 optional images
+                    Other Images
                   </label>
+                  <p className="text-sm mb-2">
+                    Remember you must upload at least 4 other images!
+                  </p>
                   {/* 1 */}
                   <input
                     type="file"
                     className={`pt-2 ps-2 w-full ${
                       optionalImg1 !== null ? "bg-green-500" : "bg-white"
-                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    } rounded h-11 shadow mb-3`}
                     accept="image/*"
                     name="upload-file"
                     onChange={(e) => handleOptionalFileChange(e, 1)}
@@ -280,7 +283,7 @@ const Uploads = () => {
                     type="file"
                     className={`pt-2 ps-2 w-full ${
                       optionalImg2 !== null ? "bg-green-500" : "bg-white"
-                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    } rounded h-11 shadow mb-3`}
                     accept="image/*"
                     name="upload-file"
                     onChange={(e) => handleOptionalFileChange(e, 2)}
@@ -290,7 +293,7 @@ const Uploads = () => {
                     type="file"
                     className={`pt-2 ps-2 w-full ${
                       optionalImg3 !== null ? "bg-green-500" : "bg-white"
-                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    } rounded h-11 shadow mb-3`}
                     accept="image/*"
                     name="upload-file"
                     onChange={(e) => handleOptionalFileChange(e, 3)}
@@ -300,7 +303,7 @@ const Uploads = () => {
                     type="file"
                     className={`pt-2 ps-2 w-full ${
                       optionalImg4 !== null ? "bg-green-500" : "bg-white"
-                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    } rounded h-11 shadow mb-3`}
                     accept="image/*"
                     name="upload-file"
                     onChange={(e) => handleOptionalFileChange(e, 4)}
@@ -310,7 +313,7 @@ const Uploads = () => {
                     type="file"
                     className={`pt-2 ps-2 w-full ${
                       optionalImg5 !== null ? "bg-green-500" : "bg-white"
-                    } rounded h-11 shadow shadow-zinc-900 mb-3`}
+                    } rounded h-11 shadow mb-3`}
                     accept="image/*"
                     name="upload-file"
                     onChange={(e) => handleOptionalFileChange(e, 5)}
@@ -333,7 +336,7 @@ const Uploads = () => {
                     {...register("name")}
                     type="text"
                     name="name"
-                    className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                   />
 
                   {errors.name && (
@@ -352,7 +355,7 @@ const Uploads = () => {
                     {...register("quantity")}
                     type="text"
                     name="quantity"
-                    className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                   />
 
                   {errors.quantity && (
@@ -370,7 +373,7 @@ const Uploads = () => {
                     {...register("price", { valueAsNumber: true })}
                     type="number"
                     name="price"
-                    className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                    className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                   />
 
                   {errors.price && (
@@ -393,7 +396,7 @@ const Uploads = () => {
                     <select
                       {...register("category")}
                       name="category"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                     >
                       {categories.map((c) => (
                         <option key={c.id} value={c.category_names}>
@@ -419,7 +422,7 @@ const Uploads = () => {
                     <select
                       {...register("brand")}
                       name="brand"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2 font-poppins`}
                     >
                       {brands.map((b) => (
                         <option key={b.id} value={b.brand_names}>
@@ -450,7 +453,7 @@ const Uploads = () => {
                       {...register("sizeStart")}
                       type="text"
                       name="sizeStart"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                     />
 
                     {errors.sizeStart && (
@@ -468,7 +471,7 @@ const Uploads = () => {
                       {...register("sizeEnd")}
                       type="text"
                       name="sizeEnd"
-                      className={`focus:outline-none px-4 h-11 rounded shadow shadow-zinc-900 placeholder:text-gray-500 text-md w-full my-2`}
+                      className={`focus:outline-none px-4 h-11 rounded shadow placeholder:text-gray-500 text-md w-full my-2`}
                     />
 
                     {errors.sizeEnd && (
@@ -490,7 +493,7 @@ const Uploads = () => {
                   <textarea
                     {...register("description")}
                     name="description"
-                    className="h-28 font-poppins resize-none bg-white shadow shadow-zinc-900 focus:outline-none rounded mt-3 w-full px-4 pt-2"
+                    className="h-28 font-poppins resize-none bg-white shadow focus:outline-none rounded mt-3 w-full px-4 pt-2"
                   ></textarea>
 
                   {errors.description && (

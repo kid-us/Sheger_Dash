@@ -13,7 +13,7 @@ export interface Promo {
 }
 
 const usePromo = () => {
-  const access_token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("admin_token");
 
   const [promos, setPromos] = useState<PromoItem[]>([]);
 

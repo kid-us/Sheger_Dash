@@ -2,26 +2,26 @@ import axios from "axios";
 import { useState } from "react";
 import baseUrl from "../../services/request";
 import usePromo from "../../hooks/usePromo";
-// import usePromo from "../../hooks/usePromo";
 
 const Promo = () => {
-  const [promo, setPromo] = useState<string>("");
+  const [promo, setPromo] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
   const { promos } = usePromo();
 
   const [edit, setEdit] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>(0);
   const [newDiscount, setNewDiscount] = useState<string>("");
-
-  const access_token = localStorage.getItem("token");
+  const [loader, setLoader] = useState<boolean>(false);
+  const access_token = localStorage.getItem("admin_token");
 
   // Create Promo
   const handleSubmit = () => {
-    if (promo.length < 1) {
+    if (promo < 1) {
       setError(true);
       return;
     }
 
+    setLoader(true);
     setError(false);
 
     const data = {
@@ -66,6 +66,7 @@ const Promo = () => {
       discount: Number(newDiscount) / 100,
       promo_id: id,
     };
+
     axios
       .put(`${baseUrl}admin/edit-discount`, data, {
         headers: {
@@ -84,31 +85,39 @@ const Promo = () => {
   return (
     <>
       <div className="lg:mt-0 mt-6">
-        {/* Create Categories */}
-        <label htmlFor="category" className="block mb-2 text-sm">
+        {/* Create Promo */}
+        <label htmlFor="promo" className="block mb-2 text-sm">
           Create Promo Codes
         </label>
         <input
-          type="text"
-          name="category"
-          className="text-black bg-white rounded h-11 focus:outline-none ps-3 shadow shadow-zinc-900 lg:w-80 w-full block placeholder:text-sm"
-          onChange={(e) => setPromo(e.currentTarget.value)}
+          type="number"
+          name="promo"
+          className="text-black bg-white rounded h-11 focus:outline-none ps-3 shadow lg:w-80 w-full block placeholder:text-sm"
+          onChange={(e) => setPromo(Number(e.currentTarget.value))}
           value={promo}
           placeholder="Promo Percentage"
+          min={1}
         />
         {error && (
-          <p className="text-xs mt-1 text-red-700">Category required</p>
+          <p className="text-xs mt-1 text-red-700">Promo value required</p>
         )}
-        <button
-          onClick={handleSubmit}
-          className="btn-bg lg:w-80 w-full mt-3 rounded h-10 shadow shadow-zinc-900"
-        >
-          Create
-        </button>
+
+        {loader ? (
+          <p className="py-5 text-black btn-bg w-80 rounded flex justify-center shadow mt-3">
+            <span className="loader rounded"></span>
+          </p>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className="btn-bg lg:w-80 w-full mt-3 rounded h-10 shadow"
+          >
+            Create
+          </button>
+        )}
 
         {/* List of Promos */}
         <p className="mt-7">List of active Promos</p>
-        <div className="bg-white  rounded shadow shadow-zinc-900 px-2 pt-3 lg:w-80 mt-3">
+        <div className="bg-white  rounded shadow px-2 pt-3 lg:w-80 mt-3">
           {promos.length > 0 ? (
             promos.map((p) => (
               <div key={p.id} className="grid grid-cols-12 mb-2 py-2">
