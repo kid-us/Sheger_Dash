@@ -91,6 +91,7 @@ const Orders = () => {
         },
       })
       .then((response) => {
+        console.log(response.data);
         setAllData(response.data);
         setOrders(response.data.orders);
       })
@@ -244,7 +245,7 @@ const Orders = () => {
                 </div>
 
                 <div className="lg:col-span-5 col-span-12">
-                  <div className="grid grid-cols-12 gap-y-3">
+                  <div className="grid grid-cols-12 gap-y-3 gap-x-5">
                     {/* Phone*/}
                     <div className="lg:col-span-3 col-span-6">
                       <p className="text-xs text-gray-800 ">Phone</p>
@@ -256,6 +257,7 @@ const Orders = () => {
                       <p className="text-xs text-gray-800 ">Total Price</p>
                       <p className="font-bold text-xs">{o.total_price}</p>
                     </div>
+
                     {/* Ordered Date*/}
                     <div className="lg:col-span-3 col-span-6">
                       <p className="text-xs text-gray-800 ">Ordered Date</p>
@@ -271,6 +273,7 @@ const Orders = () => {
                         {formatDate(o.delivery_date)}
                       </p>
                     </div>
+
                     {/* Kfle ketema */}
                     <div className="lg:col-span-3 col-span-6 mt-3">
                       <p className="text-xs text-gray-800 ">Kfle Ketema</p>
@@ -280,9 +283,27 @@ const Orders = () => {
                     </div>
 
                     {/* Address */}
-                    <div className="col-span-4 rounded mt-3 ">
+                    <div className="lg:col-span-8 col-span-12 mt-3">
                       <p className="text-xs text-gray-800 ">Address</p>
                       <p className="font-bold text-sm">{o.address}</p>
+                    </div>
+
+                    {/* Promo Code */}
+                    <div className="lg:col-span-3 col-span-6 mt-3">
+                      <p className="text-xs text-gray-800 ">Promo Code</p>
+                      <p className="font-bold text-xs">
+                        {o.promocode ? o.promocode : "No-Promo"}
+                      </p>
+                    </div>
+
+                    {/* Promo Discount */}
+                    <div className="lg:col-span-3 col-span-6 mt-3">
+                      <p className="text-xs text-gray-800 ">Discount</p>
+                      <p className="font-bold text-xs">
+                        {Number(o.total_price) !== Number(o.discount_price)
+                          ? o.discount_price
+                          : "-"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -294,7 +315,7 @@ const Orders = () => {
                       {active === "pending" && (
                         <button
                           onClick={() => handleStatus("approved")}
-                          className="block text-sm mb-2 bg-yellow-500 rounded shadow shadow-zinc-900 p-1 text-white w-full"
+                          className="block text-sm mb-2 bg-yellow-500 rounded shadow shadow-zinc-900 p-3 text-white w-full"
                         >
                           Approved
                         </button>
@@ -302,7 +323,7 @@ const Orders = () => {
                       {active !== "delivered" ? (
                         <button
                           onClick={() => handleStatus("delivered")}
-                          className="block text-sm mb-2 bg-green-500 rounded shadow shadow-zinc-900 p-1 text-white w-full"
+                          className="block text-sm mb-2 bg-green-500 rounded shadow shadow-zinc-900 p-3 text-white w-full"
                         >
                           Delivered
                         </button>
@@ -312,7 +333,7 @@ const Orders = () => {
 
                       <button
                         onClick={() => setDeleteOrder(true)}
-                        className="block text-sm mb-2 bg-red-500 rounded shadow shadow-zinc-900 p-1 text-white w-full"
+                        className="block text-sm mb-2 bg-red-500 rounded shadow shadow-zinc-900 p-3 text-white w-full"
                       >
                         Delete
                       </button>
