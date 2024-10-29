@@ -6,17 +6,26 @@ import usePromo from "../../hooks/usePromo";
 const Promo = () => {
   const [promo, setPromo] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
+  const [nameError, setNameError] = useState<boolean>(false);
   const { promos } = usePromo();
+  const [promoName, setPromoName] = useState<string>("");
 
   const [edit, setEdit] = useState<boolean>(false);
   const [editId, setEditId] = useState<number>(0);
   const [newDiscount, setNewDiscount] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
   const access_token = localStorage.getItem("admin_token");
+  const [promoError, setPromoError] = useState<boolean>();
 
   // Create Promo
   const handleSubmit = () => {
+    if (promoName.length < 3) {
+      setNameError(true);
+      return;
+    }
+
     if (promo < 1) {
+      setNameError(false);
       setError(true);
       return;
     }
@@ -26,6 +35,7 @@ const Promo = () => {
 
     const data = {
       discount: Number(promo) / 100,
+      code: promoName,
     };
 
     axios
@@ -37,8 +47,12 @@ const Promo = () => {
       })
       .then(() => {
         window.location.reload();
+        setPromoError(false);
       })
       .catch((error) => {
+        setPromoError(true);
+        setLoader(false);
+
         console.log(error);
       });
   };
@@ -85,14 +99,30 @@ const Promo = () => {
   return (
     <>
       <div className="lg:mt-0 mt-6">
-        {/* Create Promo */}
         <label htmlFor="promo" className="block mb-2 text-sm">
-          Create Promo Codes
+          Promo Name
+        </label>
+        <input
+          type="text"
+          name="promo"
+          className="text-black bg-white rounded h-11 focus:outline-none ps-5 shadow lg:w-80 w-full block placeholder:text-sm"
+          onChange={(e) => setPromoName(e.currentTarget.value)}
+          value={promoName}
+          placeholder="Promo Name"
+        />
+        {nameError && (
+          <p className="text-xs mt-1 text-red-700">
+            Promo name required and must be greater than 3 chars.
+          </p>
+        )}
+        {/* Create Promo */}
+        <label htmlFor="promo" className="block mb-2 text-sm mt-3">
+          Promo Percentage
         </label>
         <input
           type="number"
           name="promo"
-          className="text-black bg-white rounded h-11 focus:outline-none ps-3 shadow lg:w-80 w-full block placeholder:text-sm"
+          className="text-black bg-white rounded h-11 focus:outline-none ps-5 shadow lg:w-80 w-full block placeholder:text-sm"
           onChange={(e) => setPromo(Number(e.currentTarget.value))}
           value={promo}
           placeholder="Promo Percentage"
@@ -100,6 +130,11 @@ const Promo = () => {
         />
         {error && (
           <p className="text-xs mt-1 text-red-700">Promo value required</p>
+        )}
+
+        {/* Promo Error */}
+        {promoError && (
+          <p className="text-sm text-red-700 mt-4">Promo already exists.</p>
         )}
 
         {loader ? (
