@@ -91,7 +91,6 @@ const Orders = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setAllData(response.data);
         setOrders(response.data.orders);
       })
@@ -298,12 +297,8 @@ const Orders = () => {
 
                     {/* Promo Discount */}
                     <div className="lg:col-span-3 col-span-6 mt-3">
-                      <p className="text-xs text-gray-800 ">Discount</p>
-                      <p className="font-bold text-xs">
-                        {Number(o.total_price) !== Number(o.discount_price)
-                          ? o.discount_price
-                          : "-"}
-                      </p>
+                      <p className="text-xs text-gray-800 ">Discounted Price</p>
+                      <p className="font-bold text-xs">{o.discount_price}</p>
                     </div>
                   </div>
                 </div>
